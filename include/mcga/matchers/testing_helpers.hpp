@@ -2,8 +2,7 @@
 
 #include <stdexcept>
 
-#include "mcga/matchers/matcher.hpp"
-#include "mcga/test.hpp"
+#include "mcga/test_ext/matchers.hpp"
 
 // Helpers for testing the matchers themselves.
 
