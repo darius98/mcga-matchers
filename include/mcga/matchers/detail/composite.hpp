@@ -5,23 +5,15 @@
 namespace mcga::matchers::detail {
 
 template<class M1, class M2>
-struct AndMatcherState {
-    bool m1Matches = false;
-    bool m2Matches = false;
-    typename M1::State m1State;
-    typename M2::State m2State;
-};
-
-template<class M1, class M2>
-struct AndMatcher : StatefulMatcher<AndMatcherState<M1, M2>> {
+struct AndMatcher : Matcher {
     constexpr AndMatcher(M1 m1, M2 m2): m1(std::move(m1)), m2(std::move(m2)) {
     }
 
     template<class T>
-    bool matches(const T& obj, AndMatcherState<M1, M2>* state) const {
-        state->m1Matches = __matches(m1, &state->m1State, obj);
-        state->m2Matches = __matches(m2, &state->m2State, obj);
-        return state->m1Matches && state->m2Matches;
+    bool matches(const T& obj) {
+        m1Matches = m1.matches(obj);
+        m2Matches = m2.matches(obj);
+        return m1Matches && m2Matches;
     }
 
     void describe(Description* description) const {
@@ -30,38 +22,32 @@ struct AndMatcher : StatefulMatcher<AndMatcherState<M1, M2>> {
         m2.describe(description);
     }
 
-    void describeFailure(Description* description,
-                         AndMatcherState<M1, M2>* state) const {
-        if (state->m1Matches) {
-            __describeFailure(description, m2, &state->m2State);
+    void describeFailure(Description* description) const {
+        if (m1Matches) {
+            m2.describeFailure(description);
         } else {
-            __describeFailure(description, m1, &state->m1State);
+            m1.describeFailure(description);
         }
     }
 
   private:
+    bool m1Matches = false;
     M1 m1;
+
+    bool m2Matches = false;
     M2 m2;
 };
 
 template<class M1, class M2>
-struct OrMatcherState {
-    bool m1Matches = false;
-    bool m2Matches = false;
-    typename M1::State m1State;
-    typename M2::State m2State;
-};
-
-template<class M1, class M2>
-struct OrMatcher : StatefulMatcher<OrMatcherState<M1, M2>> {
+struct OrMatcher : Matcher {
     constexpr OrMatcher(M1 m1, M2 m2): m1(std::move(m1)), m2(std::move(m2)) {
     }
 
     template<class T>
-    bool matches(const T& obj, OrMatcherState<M1, M2>* state) const {
-        state->m1Matches = __matches(m1, &state->m1State, obj);
-        state->m2Matches = __matches(m2, &state->m2State, obj);
-        return state->m1Matches || state->m2Matches;
+    bool matches(const T& obj) {
+        m1Matches = m1.matches(obj);
+        m2Matches = m2.matches(obj);
+        return m1Matches || m2Matches;
     }
 
     void describe(Description* description) const {
@@ -70,27 +56,28 @@ struct OrMatcher : StatefulMatcher<OrMatcherState<M1, M2>> {
         m2.describe(description);
     }
 
-    void describeFailure(Description* description,
-                         OrMatcherState<M1, M2>* state) const {
-        __describeFailure(description, m1, &state->m1State);
+    void describeFailure(Description* description) const {
+        m1.describeFailure(description);
         (*description) << " and ";
-        __describeFailure(description, m2, &state->m2State);
+        m2.describeFailure(description);
     }
 
   private:
+    bool m1Matches = false;
     M1 m1;
+
+    bool m2Matches = false;
     M2 m2;
 };
 
 template<class M>
-struct NotMatcher : StatelessMatcher {
+struct NotMatcher : Matcher {
     constexpr explicit NotMatcher(M matcher): matcher(std::move(matcher)) {
     }
 
     template<class T>
-    bool matches(const T& obj) const {
-        typename M::State state;
-        return !__matches(matcher, &state, obj);
+    bool matches(const T& obj) {
+        return !matcher.matches(obj);
     }
 
     void describe(Description* description) const {

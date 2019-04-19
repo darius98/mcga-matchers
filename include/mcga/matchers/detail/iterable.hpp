@@ -4,7 +4,7 @@
 
 namespace mcga::matchers::detail {
 
-struct IsEmptyMatcher : StatelessMatcher {
+struct IsEmptyMatcher : Matcher {
     template<class T>
     bool matches(const T& object) const {
         return object.empty();
@@ -19,7 +19,7 @@ struct IsEmptyMatcher : StatelessMatcher {
     }
 };
 
-struct IsNotEmptyMatcher : StatelessMatcher {
+struct IsNotEmptyMatcher : Matcher {
     template<class T>
     bool matches(const T& object) const {
         return !object.empty();
@@ -35,14 +35,14 @@ struct IsNotEmptyMatcher : StatelessMatcher {
 };
 
 template<class M>
-struct IterableSizeMatcher : StatefulMatcher<typename M::State> {
+struct IterableSizeMatcher : Matcher {
     explicit constexpr IterableSizeMatcher(M sizeMatcher)
             : sizeMatcher(std::move(sizeMatcher)) {
     }
 
     template<class T>
-    bool matches(const T& obj, typename M::State* state) const {
-        return __matches(sizeMatcher, state, obj.size());
+    bool matches(const T& obj) {
+        return sizeMatcher.matches(obj.size());
     }
 
     void describe(Description* description) const {
@@ -50,10 +50,9 @@ struct IterableSizeMatcher : StatefulMatcher<typename M::State> {
         sizeMatcher.describe(description);
     }
 
-    void describeFailure(Description* description,
-                         typename M::State* state) const {
+    void describeFailure(Description* description) const {
         (*description) << "iterable where size is ";
-        __describeFailure(description, sizeMatcher, state);
+        sizeMatcher.describeFailure(description);
     }
 
   private:
@@ -61,23 +60,17 @@ struct IterableSizeMatcher : StatefulMatcher<typename M::State> {
 };
 
 template<class M>
-struct IterableEachState {
-    int index = -1;
-    typename M::State elementState;
-};
-
-template<class M>
-struct IterableEachMatcher : StatefulMatcher<IterableEachState<M>> {
+struct IterableEachMatcher : Matcher {
     explicit constexpr IterableEachMatcher(M elementMatcher)
             : elementMatcher(std::move(elementMatcher)) {
     }
 
     template<class T>
-    bool matches(const T& iterable, IterableEachState<M>* state) const {
-        state->index = -1;
+    bool matches(const T& iterable) {
+        index = -1;
         for (const auto& obj: iterable) {
-            state->index += 1;
-            if (!__matches(elementMatcher, &state->elementState, obj)) {
+            index += 1;
+            if (!elementMatcher.matches(obj)) {
                 return false;
             }
         }
@@ -89,28 +82,27 @@ struct IterableEachMatcher : StatefulMatcher<IterableEachState<M>> {
         elementMatcher.describe(description);
     }
 
-    void describeFailure(Description* description,
-                         IterableEachState<M>* state) const {
-        (*description) << "an iterable where at index " << state->index
+    void describeFailure(Description* description) const {
+        (*description) << "an iterable where at index " << index
                        << " the element is ";
-        __describeFailure(description, elementMatcher, &state->elementState);
+        elementMatcher.describeFailure(description);
     }
 
   private:
+    int index = -1;
     M elementMatcher;
 };
 
 template<class M>
-struct IterableAnyMatcher : StatelessMatcher {
+struct IterableAnyMatcher : Matcher {
     explicit constexpr IterableAnyMatcher(M elementMatcher)
             : elementMatcher(std::move(elementMatcher)) {
     }
 
     template<class T>
-    bool matches(const T& collection) const {
-        typename M::State state;
-        for (const auto& obj: collection) {
-            if (__matches(elementMatcher, &state, obj)) {
+    bool matches(const T& iterable) {
+        for (const auto& obj: iterable) {
+            if (elementMatcher.matches(obj)) {
                 return true;
             }
         }

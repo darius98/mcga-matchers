@@ -4,7 +4,7 @@
 
 namespace mcga::matchers::detail {
 
-struct IsTrueMatcher : StatelessMatcher {
+struct IsTrueMatcher : Matcher {
     bool matches(const bool& object) const {
         return object;
     }
@@ -18,7 +18,7 @@ struct IsTrueMatcher : StatelessMatcher {
     }
 };
 
-struct IsFalseMatcher : StatelessMatcher {
+struct IsFalseMatcher : Matcher {
     bool matches(const bool& object) const {
         return !object;
     }

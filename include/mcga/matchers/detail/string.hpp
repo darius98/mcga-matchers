@@ -8,7 +8,7 @@
 
 namespace mcga::matchers::detail {
 
-struct CharInStringMatcher : StatelessMatcher {
+struct CharInStringMatcher : Matcher {
     constexpr CharInStringMatcher(const char* container,
                                   const char* expectation)
             : container(container), expectation(expectation) {
@@ -39,7 +39,7 @@ struct CharInStringMatcher : StatelessMatcher {
     const char* expectation;
 };
 
-struct IsSubstringMatcher : StatelessMatcher {
+struct IsSubstringMatcher : Matcher {
   public:
     explicit IsSubstringMatcher(std::string container)
             : container(std::move(container)) {

@@ -17,7 +17,7 @@ class Description {
         } else if constexpr (tp::IsTuple<T>) {
             appendTuple(obj);
         } else if constexpr (tp::IsNullptrT<T>) {
-            stream << (int*)obj;
+            stream << static_cast<int*>(obj);
         } else if constexpr (tp::IsSstreamable<T>) {
             stream << obj;
         } else {
@@ -90,53 +90,5 @@ class Description {
 };
 
 struct Matcher {};
-
-template<class S>
-struct StatefulMatcher : public Matcher {
-    static constexpr bool HasState = true;
-
-    typedef S State;
-
-    //    template<class T>
-    //    virtual bool matches(const T& obj, S* state) const = 0;
-    //
-    //    virtual void describe(Description* description) const = 0;
-    //
-    //    virtual void describeFailure(Description* description,
-    //                                 State* state) const = 0;
-};
-
-struct StatelessMatcher : public Matcher {
-    static constexpr bool HasState = false;
-
-    typedef int State;  // for easier usage of nested matchers.
-
-    //    template<class T>
-    //    virtual bool matches(const T& obj) const = 0;
-    //
-    //    virtual void describe(Description* description) const = 0;
-    //
-    //    virtual void describeFailure(Description* description) const = 0;
-};
-
-template<class T, class M>
-bool __matches(const M& matcher, typename M::State* state, const T& obj) {
-    if constexpr (M::HasState) {
-        return matcher.matches(obj, state);
-    } else {
-        return matcher.matches(obj);
-    }
-}
-
-template<class M>
-void __describeFailure(Description* description,
-                       const M& matcher,
-                       typename M::State* state) {
-    if constexpr (M::HasState) {
-        matcher.describeFailure(description, state);
-    } else {
-        matcher.describeFailure(description);
-    }
-}
 
 }  // namespace mcga::matchers

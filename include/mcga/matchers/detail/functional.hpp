@@ -6,7 +6,7 @@
 
 namespace mcga::matchers::detail {
 
-struct ThrowsAnythingMatcher : StatelessMatcher {
+struct ThrowsAnythingMatcher : Matcher {
     bool matches(const std::function<void()>& func) const {
         try {
             func();
@@ -25,25 +25,18 @@ struct ThrowsAnythingMatcher : StatelessMatcher {
     }
 };
 
-enum ThrowsSpecificState {
-    THROWS_CORRECTLY,
-    DOESNT_THROW,
-    THROWS_DIFFERENT,
-};
-
 template<class E>
-struct ThrowsSpecificMatcher : StatefulMatcher<ThrowsSpecificState> {
-    bool matches(const std::function<void()>& func,
-                 ThrowsSpecificState* state) const {
+struct ThrowsSpecificMatcher : Matcher {
+    bool matches(const std::function<void()>& func) {
         try {
             func();
-            *state = DOESNT_THROW;
+            state = DOESNT_THROW;
             return false;
         } catch (const E& exception) {
-            *state = THROWS_CORRECTLY;
+            state = THROWS_CORRECTLY;
             return true;
         } catch (...) {
-            *state = THROWS_DIFFERENT;
+            state = THROWS_DIFFERENT;
             return false;
         }
     }
@@ -52,15 +45,21 @@ struct ThrowsSpecificMatcher : StatefulMatcher<ThrowsSpecificState> {
         (*description) << "a function that throws " << typeid(E).name();
     }
 
-    void describeFailure(Description* description,
-                         const ThrowsSpecificState* state) const {
-        if (*state == DOESNT_THROW) {
+    void describeFailure(Description* description) const {
+        if (state == DOESNT_THROW) {
             (*description) << "a function that did not throw";
         }
-        if (*state == THROWS_DIFFERENT) {
+        if (state == THROWS_DIFFERENT) {
             (*description) << "a function that throws something else";
         }
     }
+
+  private:
+    enum {
+        THROWS_CORRECTLY,
+        DOESNT_THROW,
+        THROWS_DIFFERENT,
+    } state;
 };
 
 }
