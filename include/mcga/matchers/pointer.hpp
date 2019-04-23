@@ -1,11 +1,11 @@
 #pragma once
 
-#include "mcga/matchers/detail/pointer.hpp"
+#include "mcga/matchers/internal/pointer.hpp"
 
 namespace mcga::matchers {
 
-constexpr detail::IsNullptrMatcher isNull;
+constexpr internal::IsNullptrMatcher isNull;
 
-constexpr detail::IsNotNullptrMatcher isNotNull;
+constexpr internal::IsNotNullptrMatcher isNotNull;
 
 }  // namespace mcga::matchers

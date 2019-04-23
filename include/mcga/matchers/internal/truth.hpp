@@ -2,7 +2,7 @@
 
 #include "mcga/matchers/matcher.hpp"
 
-namespace mcga::matchers::detail {
+namespace mcga::matchers::internal {
 
 struct IsTrueMatcher : Matcher {
     bool matches(const bool& object) const {
@@ -32,4 +32,4 @@ struct IsFalseMatcher : Matcher {
     }
 };
 
-}  // namespace mcga::matchers::detail
+}  // namespace mcga::matchers::internal

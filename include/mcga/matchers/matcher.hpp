@@ -1,6 +1,6 @@
 #pragma once
 
-#include "mcga/matchers/detail/type_helpers.hpp"
+#include "mcga/matchers/internal/type_helpers.hpp"
 
 namespace mcga::matchers {
 

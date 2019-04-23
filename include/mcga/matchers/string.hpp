@@ -1,32 +1,32 @@
 #pragma once
 
-#include "mcga/matchers/detail/string.hpp"
+#include "mcga/matchers/internal/string.hpp"
 
 namespace mcga::matchers {
 
-constexpr detail::CharInStringMatcher
+constexpr internal::CharInStringMatcher
   isLetter("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", "a letter");
 
-constexpr detail::CharInStringMatcher isDigit("0123456789", "a digit");
+constexpr internal::CharInStringMatcher isDigit("0123456789", "a digit");
 
-constexpr detail::CharInStringMatcher
+constexpr internal::CharInStringMatcher
   isLowercaseLetter("abcdefghijklmnopqrstuvwxyz", "a lowercase letter");
 
-constexpr detail::CharInStringMatcher
+constexpr internal::CharInStringMatcher
   isUppercaseLetter("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "an uppercase letter");
 
-constexpr detail::CharInStringMatcher isBinaryDigit("01", "a binary digit");
+constexpr internal::CharInStringMatcher isBinaryDigit("01", "a binary digit");
 
-constexpr detail::CharInStringMatcher isOctDigit("01234567", "an oct digit");
+constexpr internal::CharInStringMatcher isOctDigit("01234567", "an oct digit");
 
-constexpr detail::CharInStringMatcher isHexDigit("0123456789ABCDEFabcdef",
-                                                 "a hex digit");
+constexpr internal::CharInStringMatcher isHexDigit("0123456789ABCDEFabcdef",
+                                                   "a hex digit");
 
-constexpr detail::CharInStringMatcher isWhitespace(" \t\r\n\f\v",
-                                                   "a whitespace character");
+constexpr internal::CharInStringMatcher isWhitespace(" \t\r\n\f\v",
+                                                     "a whitespace character");
 
-inline detail::IsSubstringMatcher isSubstringOf(const std::string& s) {
-    return detail::IsSubstringMatcher(s);
+inline internal::IsSubstringMatcher isSubstringOf(const std::string& s) {
+    return internal::IsSubstringMatcher(s);
 }
 
 }  // namespace mcga::matchers

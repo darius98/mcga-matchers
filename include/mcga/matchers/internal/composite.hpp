@@ -2,7 +2,7 @@
 
 #include "mcga/matchers/comparison.hpp"
 
-namespace mcga::matchers::detail {
+namespace mcga::matchers::internal {
 
 template<class M1, class M2>
 struct AndMatcher : Matcher {
@@ -93,4 +93,4 @@ struct NotMatcher : Matcher {
     M matcher;
 };
 
-}  // namespace mcga::matchers::detail
+}  // namespace mcga::matchers::internal

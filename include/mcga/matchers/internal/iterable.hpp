@@ -2,7 +2,7 @@
 
 #include "mcga/matchers/comparison.hpp"
 
-namespace mcga::matchers::detail {
+namespace mcga::matchers::internal {
 
 struct IsEmptyMatcher : Matcher {
     template<class T>
@@ -123,4 +123,4 @@ struct IterableAnyMatcher : Matcher {
     M elementMatcher;
 };
 
-}  // namespace mcga::matchers::detail
+}  // namespace mcga::matchers::internal

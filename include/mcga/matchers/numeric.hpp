@@ -1,24 +1,24 @@
 #pragma once
 
-#include "mcga/matchers/detail/numeric.hpp"
+#include "mcga/matchers/internal/numeric.hpp"
 
 namespace mcga::matchers {
 
-constexpr detail::IsPositiveMatcher isPositive;
+constexpr internal::IsPositiveMatcher isPositive;
 
-constexpr detail::IsNegativeMatcher isNegative;
+constexpr internal::IsNegativeMatcher isNegative;
 
-constexpr detail::IsEvenMatcher isEven;
+constexpr internal::IsEvenMatcher isEven;
 
-constexpr detail::IsOddMatcher isOdd;
+constexpr internal::IsOddMatcher isOdd;
 
-constexpr detail::IsZeroMatcher isZero;
+constexpr internal::IsZeroMatcher isZero;
 
-constexpr detail::IsNotZeroMatcher isNotZero;
+constexpr internal::IsNotZeroMatcher isNotZero;
 
 template<class T>
 constexpr auto isAlmostEqualTo(const T& target, const double& eps) {
-    return detail::IsAlmostEqualMatcher(target, eps);
+    return internal::IsAlmostEqualMatcher(target, eps);
 }
 
 }  // namespace mcga::matchers

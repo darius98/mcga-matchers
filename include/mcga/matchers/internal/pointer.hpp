@@ -2,7 +2,7 @@
 
 #include "mcga/matchers/matcher.hpp"
 
-namespace mcga::matchers::detail {
+namespace mcga::matchers::internal {
 
 struct IsNullptrMatcher : Matcher {
     bool matches(void* const& obj) const {
@@ -32,4 +32,4 @@ struct IsNotNullptrMatcher : Matcher {
     }
 };
 
-}  // namespace mcga::matchers::detail
+}  // namespace mcga::matchers::internal

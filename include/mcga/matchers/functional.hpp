@@ -1,14 +1,14 @@
 #pragma once
 
-#include "mcga/matchers/detail/functional.hpp"
+#include "mcga/matchers/internal/functional.hpp"
 
 namespace mcga::matchers {
 
 template<class E>
-constexpr detail::ThrowsSpecificMatcher<E> throwsA() {
-    return detail::ThrowsSpecificMatcher<E>();
+constexpr internal::ThrowsSpecificMatcher<E> throwsA() {
+    return internal::ThrowsSpecificMatcher<E>();
 }
 
-constexpr detail::ThrowsAnythingMatcher throws;
+constexpr internal::ThrowsAnythingMatcher throws;
 
 }  // namespace mcga::matchers

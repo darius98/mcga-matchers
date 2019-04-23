@@ -9,7 +9,7 @@
 
 namespace mcga::matchers::tp {
 
-namespace detail {
+namespace internal {
 
 template<class T>
 constexpr decltype(std::begin(std::declval<const T&>())) Begin();
@@ -58,7 +58,7 @@ std::false_type IsSstreamableImpl(...) {
     return std::false_type();
 }
 
-}  // namespace detail
+}  // namespace internal
 
 template<class T>
 constexpr bool IsStringLike
@@ -70,19 +70,19 @@ constexpr bool IsStringLike
             && std::is_same_v<char, std::remove_all_extents_t<T>>);
 
 template<class T>
-constexpr bool IsIterable = decltype(detail::IsIterableImpl<T>(0))::value;
+constexpr bool IsIterable = decltype(internal::IsIterableImpl<T>(0))::value;
 
 template<class T>
-constexpr bool IsPair = detail::IsPairImpl<T>::value;
+constexpr bool IsPair = internal::IsPairImpl<T>::value;
 
 template<class T>
-constexpr bool IsTuple = detail::IsTupleImpl<T>::value;
+constexpr bool IsTuple = internal::IsTupleImpl<T>::value;
 
 template<class T>
 constexpr bool IsNullptrT = std::is_same_v<T, std::nullptr_t>;
 
 template<class T>
-constexpr bool IsSstreamable = decltype(detail::IsSstreamableImpl<T>(0))::value;
+constexpr bool IsSstreamable = decltype(internal::IsSstreamableImpl<T>(0))::value;
 
 template<class S, std::size_t I = 0, class... Items>
 typename std::enable_if_t<I == sizeof...(Items), void>

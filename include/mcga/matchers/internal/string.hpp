@@ -6,7 +6,7 @@
 
 #include "mcga/matchers/matcher.hpp"
 
-namespace mcga::matchers::detail {
+namespace mcga::matchers::internal {
 
 struct CharInStringMatcher : Matcher {
     constexpr CharInStringMatcher(const char* container,
@@ -61,4 +61,4 @@ struct IsSubstringMatcher : Matcher {
     std::string container;
 };
 
-}  // namespace mcga::matchers::detail
+}  // namespace mcga::matchers::internal

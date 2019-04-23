@@ -1,11 +1,11 @@
 #pragma once
 
-#include "mcga/matchers/detail/truth.hpp"
+#include "mcga/matchers/internal/truth.hpp"
 
 namespace mcga::matchers {
 
-constexpr detail::IsTrueMatcher isTrue;
+constexpr internal::IsTrueMatcher isTrue;
 
-constexpr detail::IsFalseMatcher isFalse;
+constexpr internal::IsFalseMatcher isFalse;
 
 }  // namespace mcga::matchers

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "mcga/matchers/detail/composite.hpp"
+#include "mcga/matchers/internal/composite.hpp"
 
 namespace mcga::matchers {
 
@@ -8,15 +8,15 @@ template<class A, class B>
 constexpr auto both(const A& a, const B& b) {
     if constexpr (std::is_base_of_v<Matcher, A>) {
         if constexpr (std::is_base_of_v<Matcher, B>) {
-            return detail::AndMatcher(a, b);
+            return internal::AndMatcher(a, b);
         } else {
-            return detail::AndMatcher(a, isEqualTo(b));
+            return internal::AndMatcher(a, isEqualTo(b));
         }
     } else {
         if constexpr (std::is_base_of_v<Matcher, B>) {
-            return detail::AndMatcher(isEqualTo(a), b);
+            return internal::AndMatcher(isEqualTo(a), b);
         } else {
-            return detail::AndMatcher(isEqualTo(a), isEqualTo(b));
+            return internal::AndMatcher(isEqualTo(a), isEqualTo(b));
         }
     }
 }
@@ -25,15 +25,15 @@ template<class A, class B>
 constexpr auto either(const A& a, const B& b) {
     if constexpr (std::is_base_of_v<Matcher, A>) {
         if constexpr (std::is_base_of_v<Matcher, B>) {
-            return detail::OrMatcher(a, b);
+            return internal::OrMatcher(a, b);
         } else {
-            return detail::OrMatcher(a, isEqualTo(b));
+            return internal::OrMatcher(a, isEqualTo(b));
         }
     } else {
         if constexpr (std::is_base_of_v<Matcher, B>) {
-            return detail::OrMatcher(isEqualTo(a), b);
+            return internal::OrMatcher(isEqualTo(a), b);
         } else {
-            return detail::OrMatcher(isEqualTo(a), isEqualTo(b));
+            return internal::OrMatcher(isEqualTo(a), isEqualTo(b));
         }
     }
 }
@@ -41,9 +41,9 @@ constexpr auto either(const A& a, const B& b) {
 template<class T>
 constexpr auto isNot(const T& x) {
     if constexpr (std::is_base_of_v<Matcher, T>) {
-        return detail::NotMatcher<T>(x);
+        return internal::NotMatcher<T>(x);
     } else {
-        return detail::NotMatcher(isEqualTo(x));
+        return internal::NotMatcher(isEqualTo(x));
     }
 }
 

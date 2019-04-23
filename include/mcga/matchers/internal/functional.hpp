@@ -4,7 +4,7 @@
 
 #include "mcga/matchers/matcher.hpp"
 
-namespace mcga::matchers::detail {
+namespace mcga::matchers::internal {
 
 struct ThrowsAnythingMatcher : Matcher {
     bool matches(const std::function<void()>& func) const {
@@ -62,4 +62,4 @@ struct ThrowsSpecificMatcher : Matcher {
     } state;
 };
 
-}  // namespace mcga::matchers::detail
+}  // namespace mcga::matchers::internal

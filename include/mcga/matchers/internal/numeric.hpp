@@ -2,7 +2,7 @@
 
 #include "mcga/matchers/matcher.hpp"
 
-namespace mcga::matchers::detail {
+namespace mcga::matchers::internal {
 
 struct IsPositiveMatcher : Matcher {
     template<class T>
@@ -118,4 +118,4 @@ struct IsAlmostEqualMatcher : Matcher {
     double eps;
 };
 
-}  // namespace mcga::matchers::detail
+}  // namespace mcga::matchers::internal

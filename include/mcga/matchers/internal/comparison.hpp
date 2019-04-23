@@ -5,7 +5,7 @@
 
 #include "mcga/matchers/matcher.hpp"
 
-namespace mcga::matchers::detail {
+namespace mcga::matchers::internal {
 
 template<class T>
 struct EqualityMatcher : Matcher {
@@ -457,4 +457,4 @@ IsGreaterThanEqualMatcher<std::string>::
     return IsGreaterThanEqualMatcher<char[n]>(target);
 }
 
-}  // namespace mcga::matchers::detail
+}  // namespace mcga::matchers::internal

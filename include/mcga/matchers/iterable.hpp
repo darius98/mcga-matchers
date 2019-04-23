@@ -1,38 +1,38 @@
 #pragma once
 
-#include "mcga/matchers/detail/iterable.hpp"
+#include "mcga/matchers/internal/iterable.hpp"
 
 namespace mcga::matchers {
 
 template<class T>
 constexpr auto hasSize(const T& size) {
     if constexpr (std::is_base_of_v<Matcher, T>) {
-        return detail::IterableSizeMatcher<T>(size);
+        return internal::IterableSizeMatcher<T>(size);
     } else {
-        return detail::IterableSizeMatcher(isEqualTo(size));
+        return internal::IterableSizeMatcher(isEqualTo(size));
     }
 }
 
 template<class T>
 constexpr auto eachElement(const T& each) {
     if constexpr (std::is_base_of_v<Matcher, T>) {
-        return detail::IterableEachMatcher<T>(each);
+        return internal::IterableEachMatcher<T>(each);
     } else {
-        return detail::IterableEachMatcher(isEqualTo(each));
+        return internal::IterableEachMatcher(isEqualTo(each));
     }
 }
 
 template<class T>
 constexpr auto anyElement(const T& any) {
     if constexpr (std::is_base_of_v<Matcher, T>) {
-        return detail::IterableAnyMatcher<T>(any);
+        return internal::IterableAnyMatcher<T>(any);
     } else {
-        return detail::IterableAnyMatcher(isEqualTo(any));
+        return internal::IterableAnyMatcher(isEqualTo(any));
     }
 }
 
-constexpr detail::IsEmptyMatcher isEmpty;
+constexpr internal::IsEmptyMatcher isEmpty;
 
-constexpr detail::IsNotEmptyMatcher isNotEmpty;
+constexpr internal::IsNotEmptyMatcher isNotEmpty;
 
 }  // namespace mcga::matchers
