@@ -91,4 +91,7 @@ class Description {
 
 struct Matcher {};
 
+template<class T>
+constexpr bool isMatcher = std::is_base_of_v<Matcher, T>;
+
 }  // namespace mcga::matchers
