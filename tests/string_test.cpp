@@ -1,3 +1,5 @@
+#pragma ide diagnostic ignored "readability-magic-numbers"
+
 #include <cctype>
 
 #include "mcga/test.hpp"
@@ -5,18 +7,28 @@
 #include "mcga/matchers/string.hpp"
 #include "mcga/matchers/testing_helpers.hpp"
 
-using namespace mcga::test;
-using namespace mcga::matchers;
-using namespace std;
+using mcga::test::group;
+using mcga::test::test;
+using mcga::matchers::isLetter;
+using mcga::matchers::isDigit;
+using mcga::matchers::isUppercaseLetter;
+using mcga::matchers::isLowercaseLetter;
+using mcga::matchers::isBinaryDigit;
+using mcga::matchers::isWhitespace;
+using mcga::matchers::isHexDigit;
+using mcga::matchers::isSubstringOf;
+using mcga::matchers::isOctDigit;
+using std::size_t;
+using std::string;
 
 TEST_CASE(string, "Matchers::string") {
     group("Specific charset matchers", [] {
         test("isLetter matches only letters", [] {
             for (unsigned char i = 1; i <= 127; ++i) {
                 if (('a' <= i && i <= 'z') || ('A' <= i && i <= 'Z')) {
-                    EXPECT_MATCHER_MATCHES(i, isLetter);
+                    EXPECT_MATCHER_MATCHES(i, isLetter)
                 } else {
-                    EXPECT_MATCHER_FAILS(i, isLetter);
+                    EXPECT_MATCHER_FAILS(i, isLetter)
                 }
             }
         });
@@ -24,9 +36,9 @@ TEST_CASE(string, "Matchers::string") {
         test("isDigit matches only digits", [] {
             for (unsigned char i = 1; i <= 127; ++i) {
                 if ('0' <= i && i <= '9') {
-                    EXPECT_MATCHER_MATCHES(i, isDigit);
+                    EXPECT_MATCHER_MATCHES(i, isDigit)
                 } else {
-                    EXPECT_MATCHER_FAILS(i, isDigit);
+                    EXPECT_MATCHER_FAILS(i, isDigit)
                 }
             }
         });
@@ -34,9 +46,9 @@ TEST_CASE(string, "Matchers::string") {
         test("isLowercaseLetter matches only lowercase letters", [] {
             for (unsigned char i = 1; i <= 127; ++i) {
                 if ('a' <= i && i <= 'z') {
-                    EXPECT_MATCHER_MATCHES(i, isLowercaseLetter);
+                    EXPECT_MATCHER_MATCHES(i, isLowercaseLetter)
                 } else {
-                    EXPECT_MATCHER_FAILS(i, isLowercaseLetter);
+                    EXPECT_MATCHER_FAILS(i, isLowercaseLetter)
                 }
             }
         });
@@ -44,9 +56,9 @@ TEST_CASE(string, "Matchers::string") {
         test("isUppercaseLetter matches only uppercase letters", [] {
             for (unsigned char i = 1; i <= 127; ++i) {
                 if ('A' <= i && i <= 'Z') {
-                    EXPECT_MATCHER_MATCHES(i, isUppercaseLetter);
+                    EXPECT_MATCHER_MATCHES(i, isUppercaseLetter)
                 } else {
-                    EXPECT_MATCHER_FAILS(i, isUppercaseLetter);
+                    EXPECT_MATCHER_FAILS(i, isUppercaseLetter)
                 }
             }
         });
@@ -54,9 +66,9 @@ TEST_CASE(string, "Matchers::string") {
         test("isBinaryDigit matches only binary digits", [] {
             for (unsigned char i = 1; i <= 127; ++i) {
                 if ('0' <= i && i <= '1') {
-                    EXPECT_MATCHER_MATCHES(i, isBinaryDigit);
+                    EXPECT_MATCHER_MATCHES(i, isBinaryDigit)
                 } else {
-                    EXPECT_MATCHER_FAILS(i, isBinaryDigit);
+                    EXPECT_MATCHER_FAILS(i, isBinaryDigit)
                 }
             }
         });
@@ -64,9 +76,9 @@ TEST_CASE(string, "Matchers::string") {
         test("isOctDigit matches only octal digits", [] {
             for (unsigned char i = 1; i <= 127; ++i) {
                 if ('0' <= i && i <= '7') {
-                    EXPECT_MATCHER_MATCHES(i, isOctDigit);
+                    EXPECT_MATCHER_MATCHES(i, isOctDigit)
                 } else {
-                    EXPECT_MATCHER_FAILS(i, isOctDigit);
+                    EXPECT_MATCHER_FAILS(i, isOctDigit)
                 }
             }
         });
@@ -75,9 +87,9 @@ TEST_CASE(string, "Matchers::string") {
             for (unsigned char i = 1; i <= 127; ++i) {
                 if (('0' <= i && i <= '9') || ('a' <= i && i <= 'f')
                     || ('A' <= i && i <= 'F')) {
-                    EXPECT_MATCHER_MATCHES(i, isHexDigit);
+                    EXPECT_MATCHER_MATCHES(i, isHexDigit)
                 } else {
-                    EXPECT_MATCHER_FAILS(i, isHexDigit);
+                    EXPECT_MATCHER_FAILS(i, isHexDigit)
                 }
             }
         });
@@ -85,9 +97,9 @@ TEST_CASE(string, "Matchers::string") {
         test("isWhitespace matches only whitespace characters", [] {
             for (unsigned char i = 1; i <= 127; ++i) {
                 if (static_cast<bool>(isspace(i))) {
-                    EXPECT_MATCHER_MATCHES(i, isWhitespace);
+                    EXPECT_MATCHER_MATCHES(i, isWhitespace)
                 } else {
-                    EXPECT_MATCHER_FAILS(i, isWhitespace);
+                    EXPECT_MATCHER_FAILS(i, isWhitespace)
                 }
             }
         });
@@ -95,29 +107,29 @@ TEST_CASE(string, "Matchers::string") {
 
     group("isSubstring", [] {
         test("Empty string is substring of anything", [] {
-            EXPECT_MATCHER_MATCHES("", isSubstringOf("Empty"));
-            EXPECT_MATCHER_MATCHES("", isSubstringOf(" string i"));
-            EXPECT_MATCHER_MATCHES("", isSubstringOf("s a substring of anyth"));
-            EXPECT_MATCHER_MATCHES("", isSubstringOf(""));
-            EXPECT_MATCHER_MATCHES("", isSubstringOf("ing"));
+            EXPECT_MATCHER_MATCHES("", isSubstringOf("Empty"))
+            EXPECT_MATCHER_MATCHES("", isSubstringOf(" string i"))
+            EXPECT_MATCHER_MATCHES("", isSubstringOf("s a substring of anyth"))
+            EXPECT_MATCHER_MATCHES("", isSubstringOf(""))
+            EXPECT_MATCHER_MATCHES("", isSubstringOf("ing"))
         });
 
         test("Nothing but the empty string is substring of the empty substring",
              [] {
-                 EXPECT_MATCHER_MATCHES("", isSubstringOf(""));
-                 EXPECT_MATCHER_FAILS("Nothing ", isSubstringOf(""));
-                 EXPECT_MATCHER_FAILS("i", isSubstringOf(""));
-                 EXPECT_MATCHER_FAILS("s", isSubstringOf(""));
-                 EXPECT_MATCHER_FAILS(" a substring of the", isSubstringOf(""));
-                 EXPECT_MATCHER_FAILS("empty string", isSubstringOf(""));
+                 EXPECT_MATCHER_MATCHES("", isSubstringOf(""))
+                 EXPECT_MATCHER_FAILS("Nothing ", isSubstringOf(""))
+                 EXPECT_MATCHER_FAILS("i", isSubstringOf(""))
+                 EXPECT_MATCHER_FAILS("s", isSubstringOf(""))
+                 EXPECT_MATCHER_FAILS(" a substring of the", isSubstringOf(""))
+                 EXPECT_MATCHER_FAILS("empty string", isSubstringOf(""))
              });
 
         test("Any string is a substring of itself", [] {
-            EXPECT_MATCHER_MATCHES("Any", isSubstringOf("Any"));
-            EXPECT_MATCHER_MATCHES(" string i", isSubstringOf(" string i"));
+            EXPECT_MATCHER_MATCHES("Any", isSubstringOf("Any"))
+            EXPECT_MATCHER_MATCHES(" string i", isSubstringOf(" string i"))
             EXPECT_MATCHER_MATCHES("s a substring of itsel",
-                                   isSubstringOf("s a substring of itsel"));
-            EXPECT_MATCHER_MATCHES("f", isSubstringOf("f"));
+                                   isSubstringOf("s a substring of itsel"))
+            EXPECT_MATCHER_MATCHES("f", isSubstringOf("f"))
         });
 
         test("All substrings of 'Hello World!' match "
@@ -127,18 +139,18 @@ TEST_CASE(string, "Matchers::string") {
                  for (size_t start = 0; start < s.length(); ++start) {
                      for (size_t len = 0; start + len <= s.length(); ++len) {
                          EXPECT_MATCHER_MATCHES(s.substr(start, len),
-                                                isSubstringOf(s));
+                                                isSubstringOf(s))
                      }
                  }
              });
 
         test("'Hello' is not a substring of 'World!'",
-             [] { EXPECT_MATCHER_FAILS("Hello", isSubstringOf("World!")); });
+             [] { EXPECT_MATCHER_FAILS("Hello", isSubstringOf("World!")) });
 
         test("'Hello' is not a substring of 'ello'",
-             [] { EXPECT_MATCHER_FAILS("Hello", isSubstringOf("ello")); });
+             [] { EXPECT_MATCHER_FAILS("Hello", isSubstringOf("ello")) });
 
         test("'Hello' is not a substring of 'hello!!'",
-             [] { EXPECT_MATCHER_FAILS("Hello", isSubstringOf("hello!!")); });
+             [] { EXPECT_MATCHER_FAILS("Hello", isSubstringOf("hello!!")) });
     });
 }

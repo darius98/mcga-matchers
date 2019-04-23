@@ -7,15 +7,29 @@
 // Helpers for testing the matchers themselves.
 
 #define EXPECT_MATCHER_FAILS(...)                                              \
-    try {                                                                      \
-        mcga::test::expect(__VA_ARGS__);                                       \
-        fail("expect(" #__VA_ARGS__ ") did not fail!");                        \
-    } catch (const std::exception&) {                                          \
+    {                                                                          \
+        bool failed;                                                           \
+        try {                                                                  \
+            mcga::test::expect(__VA_ARGS__);                                   \
+            failed = false;                                                    \
+        } catch (const std::exception&) {                                      \
+            failed = true;                                                     \
+        }                                                                      \
+        if (!failed) {                                                         \
+            mcga::test::fail("expect(" #__VA_ARGS__ ") did not fail!");        \
+        }                                                                      \
     }
 
 #define EXPECT_MATCHER_MATCHES(...)                                            \
-    try {                                                                      \
-        mcga::test::expect(__VA_ARGS__);                                       \
-    } catch (const std::exception&) {                                          \
-        fail("expect(" #__VA_ARGS__ ") failed!");                              \
+    {                                                                          \
+        bool failed;                                                           \
+        try {                                                                  \
+            mcga::test::expect(__VA_ARGS__);                                   \
+            failed = false;                                                    \
+        } catch (const std::exception&) {                                      \
+            failed = true;                                                     \
+        }                                                                      \
+        if (failed) {                                                          \
+            mcga::test::fail("expect(" #__VA_ARGS__ ") failed!");              \
+        }                                                                      \
     }

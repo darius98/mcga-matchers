@@ -62,4 +62,4 @@ struct ThrowsSpecificMatcher : Matcher {
     } state;
 };
 
-}
+}  // namespace mcga::matchers::detail

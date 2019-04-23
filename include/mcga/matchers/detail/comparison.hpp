@@ -194,10 +194,9 @@ struct EqualityMatcher<std::string> : Matcher {
             mismatchIndex += 1;
         }
 
-        // number of spaces we must place the mismatch caret to the right
-        // the initial '11' represents the length of
-        // "Expected: '" / "     Got: '"
-        std::size_t numSpaces = 11u + std::min(mismatchIndex, relevantRange);
+        // number of spaces we must place the mismatch caret to the right:
+        std::size_t numSpaces = std::string("Expected: '").length()
+          + std::min(mismatchIndex, relevantRange);
         if (mismatchIndex > relevantRange) {
             numSpaces += 3;
         }
@@ -458,4 +457,4 @@ IsGreaterThanEqualMatcher<std::string>::
     return IsGreaterThanEqualMatcher<char[n]>(target);
 }
 
-}
+}  // namespace mcga::matchers::detail

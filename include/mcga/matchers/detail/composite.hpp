@@ -93,4 +93,4 @@ struct NotMatcher : Matcher {
     M matcher;
 };
 
-}
+}  // namespace mcga::matchers::detail

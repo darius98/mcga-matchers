@@ -25,7 +25,7 @@ decltype(Begin<T>() != End<T>(),
          ++Ref(Begin<T>()),
          *Begin<T>(),
          std::true_type())
-  IsIterableImpl(int) {
+  IsIterableImpl(int /*unused*/) {
     return std::true_type();
 }
 
@@ -49,7 +49,7 @@ struct IsTupleImpl<std::tuple<Items...>> : std::true_type {};
 template<class T>
 decltype(Ref(std::declval<std::stringstream>()) << std::declval<T>(),
          std::true_type())
-  IsSstreamableImpl(int) {
+  IsSstreamableImpl(int /*unused*/) {
     return std::true_type();
 }
 
@@ -62,11 +62,12 @@ std::false_type IsSstreamableImpl(...) {
 
 template<class T>
 constexpr bool IsStringLike
-  = std::is_same_v<
-      T,
-      std::
-        string> || std::is_same_v<T, std::string_view> || (std::is_pointer_v<T> && std::is_same_v<char, std::remove_pointer_t<T>>)
-  || (std::is_array_v<T> && std::is_same_v<char, std::remove_all_extents_t<T>>);
+  = std::is_same_v<T, std::string>
+    || std::is_same_v<T, std::string_view>
+    || (std::is_pointer_v<T>
+            && std::is_same_v<char, std::remove_pointer_t<T>>)
+    || (std::is_array_v<T>
+            && std::is_same_v<char, std::remove_all_extents_t<T>>);
 
 template<class T>
 constexpr bool IsIterable = decltype(detail::IsIterableImpl<T>(0))::value;
