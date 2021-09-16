@@ -7,17 +7,17 @@
 #include "mcga/matchers/string.hpp"
 #include "mcga/matchers/testing_helpers.hpp"
 
+using mcga::matchers::isBinaryDigit;
+using mcga::matchers::isDigit;
+using mcga::matchers::isHexDigit;
+using mcga::matchers::isLetter;
+using mcga::matchers::isLowercaseLetter;
+using mcga::matchers::isOctDigit;
+using mcga::matchers::isSubstringOf;
+using mcga::matchers::isUppercaseLetter;
+using mcga::matchers::isWhitespace;
 using mcga::test::group;
 using mcga::test::test;
-using mcga::matchers::isLetter;
-using mcga::matchers::isDigit;
-using mcga::matchers::isUppercaseLetter;
-using mcga::matchers::isLowercaseLetter;
-using mcga::matchers::isBinaryDigit;
-using mcga::matchers::isWhitespace;
-using mcga::matchers::isHexDigit;
-using mcga::matchers::isSubstringOf;
-using mcga::matchers::isOctDigit;
 using std::size_t;
 using std::string;
 

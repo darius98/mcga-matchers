@@ -62,12 +62,11 @@ std::false_type IsSstreamableImpl(...) {
 
 template<class T>
 constexpr bool IsStringLike
-  = std::is_same_v<T, std::string>
-    || std::is_same_v<T, std::string_view>
-    || (std::is_pointer_v<T>
-            && std::is_same_v<char, std::remove_pointer_t<T>>)
-    || (std::is_array_v<T>
-            && std::is_same_v<char, std::remove_all_extents_t<T>>);
+  = std::is_same_v<
+      T,
+      std::
+        string> || std::is_same_v<T, std::string_view> || (std::is_pointer_v<T> && std::is_same_v<char, std::remove_pointer_t<T>>)
+  || (std::is_array_v<T> && std::is_same_v<char, std::remove_all_extents_t<T>>);
 
 template<class T>
 constexpr bool IsIterable = decltype(internal::IsIterableImpl<T>(0))::value;
@@ -82,7 +81,8 @@ template<class T>
 constexpr bool IsNullptrT = std::is_same_v<T, std::nullptr_t>;
 
 template<class T>
-constexpr bool IsSstreamable = decltype(internal::IsSstreamableImpl<T>(0))::value;
+constexpr bool IsSstreamable
+  = decltype(internal::IsSstreamableImpl<T>(0))::value;
 
 template<class S, std::size_t I = 0, class... Items>
 typename std::enable_if_t<I == sizeof...(Items), void>

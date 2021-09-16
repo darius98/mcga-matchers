@@ -3,9 +3,9 @@
 #include "mcga/matchers/testing_helpers.hpp"
 #include "mcga/matchers/truth.hpp"
 
-using mcga::test::test;
-using mcga::matchers::isTrue;
 using mcga::matchers::isFalse;
+using mcga::matchers::isTrue;
+using mcga::test::test;
 
 TEST_CASE(truth, "Matchers::truth") {
     test("isTrue matcher matches true",

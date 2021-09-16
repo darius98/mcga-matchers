@@ -371,8 +371,8 @@ struct IsLessThanEqualMatcher<char[n]> : IsLessThanEqualMatcher<std::string> {
 };
 
 template<int n>
-IsLessThanEqualMatcher<std::string>::
-  operator IsLessThanEqualMatcher<char[n]>() const {
+IsLessThanEqualMatcher<std::string>::operator IsLessThanEqualMatcher<char[n]>()
+  const {
     return IsLessThanEqualMatcher<char[n]>(target);
 }
 
@@ -411,8 +411,8 @@ struct IsGreaterThanMatcher<char[n]> : IsGreaterThanMatcher<std::string> {
 };
 
 template<int n>
-IsGreaterThanMatcher<std::string>::
-  operator IsGreaterThanMatcher<char[n]>() const {
+IsGreaterThanMatcher<std::string>::operator IsGreaterThanMatcher<char[n]>()
+  const {
     return IsGreaterThanMatcher<char[n]>(target);
 }
 
@@ -452,8 +452,8 @@ struct IsGreaterThanEqualMatcher<char[n]>
 };
 
 template<int n>
-IsGreaterThanEqualMatcher<std::string>::
-  operator IsGreaterThanEqualMatcher<char[n]>() const {
+IsGreaterThanEqualMatcher<std::string>::operator IsGreaterThanEqualMatcher<
+  char[n]>() const {
     return IsGreaterThanEqualMatcher<char[n]>(target);
 }
 

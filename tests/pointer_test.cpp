@@ -49,11 +49,11 @@ TEST_CASE(pointer, "Matchers::pointer") {
     });
 
     group("Non-null pointers", [] {
-        int* intHeapPtr = nullptr;
-        char* charHeapPtr = nullptr;
-        BasicClass* classHeapPtr = nullptr;
-        BasicStruct* structHeapPtr = nullptr;
-        double* doubleHeapPtr = nullptr;
+        std::unique_ptr<int> intHeapPtr;
+        std::unique_ptr<char> charHeapPtr;
+        std::unique_ptr<BasicClass> classHeapPtr;
+        std::unique_ptr<BasicStruct> structHeapPtr;
+        std::unique_ptr<double> doubleHeapPtr;
 
         int stackInt;
         char stackChar;
@@ -62,40 +62,35 @@ TEST_CASE(pointer, "Matchers::pointer") {
         double stackDouble;
 
         setUp([&] {
-            intHeapPtr = new int();
-            charHeapPtr = new char();
-            classHeapPtr = new BasicClass();
-            structHeapPtr = new BasicStruct();
-            doubleHeapPtr = new double();
+            intHeapPtr = std::make_unique<int>();
+            charHeapPtr = std::make_unique<char>();
+            classHeapPtr = std::make_unique<BasicClass>();
+            structHeapPtr = std::make_unique<BasicStruct>();
+            doubleHeapPtr = std::make_unique<double>();
         });
 
         tearDown([&] {
-            delete intHeapPtr;
-            intHeapPtr = nullptr;
-            delete charHeapPtr;
-            charHeapPtr = nullptr;
-            delete classHeapPtr;
-            classHeapPtr = nullptr;
-            delete structHeapPtr;
-            structHeapPtr = nullptr;
-            delete doubleHeapPtr;
-            doubleHeapPtr = nullptr;
+            intHeapPtr.reset();
+            charHeapPtr.reset();
+            classHeapPtr.reset();
+            structHeapPtr.reset();
+            doubleHeapPtr.reset();
         });
 
         test("isNull does not match non-null heap pointers", [&] {
-            EXPECT_MATCHER_FAILS(intHeapPtr, isNull)
-            EXPECT_MATCHER_FAILS(charHeapPtr, isNull)
-            EXPECT_MATCHER_FAILS(classHeapPtr, isNull)
-            EXPECT_MATCHER_FAILS(structHeapPtr, isNull)
-            EXPECT_MATCHER_FAILS(doubleHeapPtr, isNull)
+            EXPECT_MATCHER_FAILS(intHeapPtr.get(), isNull)
+            EXPECT_MATCHER_FAILS(charHeapPtr.get(), isNull)
+            EXPECT_MATCHER_FAILS(classHeapPtr.get(), isNull)
+            EXPECT_MATCHER_FAILS(structHeapPtr.get(), isNull)
+            EXPECT_MATCHER_FAILS(doubleHeapPtr.get(), isNull)
         });
 
         test("isNotNull matches non-null heap pointers", [&] {
-            EXPECT_MATCHER_MATCHES(intHeapPtr, isNotNull)
-            EXPECT_MATCHER_MATCHES(charHeapPtr, isNotNull)
-            EXPECT_MATCHER_MATCHES(classHeapPtr, isNotNull)
-            EXPECT_MATCHER_MATCHES(structHeapPtr, isNotNull)
-            EXPECT_MATCHER_MATCHES(doubleHeapPtr, isNotNull)
+            EXPECT_MATCHER_MATCHES(intHeapPtr.get(), isNotNull)
+            EXPECT_MATCHER_MATCHES(charHeapPtr.get(), isNotNull)
+            EXPECT_MATCHER_MATCHES(classHeapPtr.get(), isNotNull)
+            EXPECT_MATCHER_MATCHES(structHeapPtr.get(), isNotNull)
+            EXPECT_MATCHER_MATCHES(doubleHeapPtr.get(), isNotNull)
         });
 
         test("isNull does not match non-null stack pointers", [&] {
