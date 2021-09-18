@@ -2,7 +2,7 @@
 
 #include <concepts>
 
-#include "mcga/matchers/internal/type_helpers.hpp"
+#include "internal_type_helpers.hpp"
 
 namespace mcga::matchers {
 

@@ -1,32 +1,89 @@
 #pragma once
 
-#include "mcga/matchers/internal/string.hpp"
+#include <cstring>
+
+#include <string>
+
+#include "mcga/matchers/matcher.hpp"
 
 namespace mcga::matchers {
 
-constexpr internal::CharInStringMatcher
+struct CharInStringMatcher {
+    constexpr CharInStringMatcher(const char* container,
+                                  const char* expectation)
+            : container(container), expectation(expectation) {
+    }
+
+    bool matches(const char& ch) const {
+        return strchr(container, ch) != nullptr;
+    }
+
+    void describe(Description* description) const {
+        if (expectation != nullptr) {
+            (*description) << expectation;
+        } else {
+            (*description) << "character in '" << container << "'";
+        }
+    }
+
+    void describeFailure(Description* description) const {
+        if (expectation != nullptr) {
+            (*description) << "not " << expectation;
+        } else {
+            (*description) << "character that is not in '" << container << "'";
+        }
+    }
+
+  private:
+    const char* container;
+    const char* expectation;
+};
+
+struct IsSubstringMatcher {
+  public:
+    explicit IsSubstringMatcher(std::string container)
+            : container(std::move(container)) {
+    }
+
+    bool matches(const std::string& object) const {
+        return container.find(object) != std::string::npos;
+    }
+
+    void describe(Description* description) const {
+        (*description) << "a substring of '" << container << "'";
+    }
+
+    void describeFailure(Description* description) const {
+        (*description) << "not a substring";
+    }
+
+  private:
+    std::string container;
+};
+
+constexpr CharInStringMatcher
   isLetter("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", "a letter");
 
-constexpr internal::CharInStringMatcher isDigit("0123456789", "a digit");
+constexpr CharInStringMatcher isDigit("0123456789", "a digit");
 
-constexpr internal::CharInStringMatcher
+constexpr CharInStringMatcher
   isLowercaseLetter("abcdefghijklmnopqrstuvwxyz", "a lowercase letter");
 
-constexpr internal::CharInStringMatcher
+constexpr CharInStringMatcher
   isUppercaseLetter("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "an uppercase letter");
 
-constexpr internal::CharInStringMatcher isBinaryDigit("01", "a binary digit");
+constexpr CharInStringMatcher isBinaryDigit("01", "a binary digit");
 
-constexpr internal::CharInStringMatcher isOctDigit("01234567", "an oct digit");
+constexpr CharInStringMatcher isOctDigit("01234567", "an oct digit");
 
-constexpr internal::CharInStringMatcher isHexDigit("0123456789ABCDEFabcdef",
+constexpr CharInStringMatcher isHexDigit("0123456789ABCDEFabcdef",
                                                    "a hex digit");
 
-constexpr internal::CharInStringMatcher isWhitespace(" \t\r\n\f\v",
+constexpr CharInStringMatcher isWhitespace(" \t\r\n\f\v",
                                                      "a whitespace character");
 
-inline internal::IsSubstringMatcher isSubstringOf(const std::string& s) {
-    return internal::IsSubstringMatcher(s);
+inline auto isSubstringOf(const std::string& s) {
+    return IsSubstringMatcher(s);
 }
 
 }  // namespace mcga::matchers
