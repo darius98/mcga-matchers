@@ -66,21 +66,21 @@ constexpr CharInStringMatcher
 
 constexpr CharInStringMatcher isDigit("0123456789", "a digit");
 
-constexpr CharInStringMatcher
-  isLowercaseLetter("abcdefghijklmnopqrstuvwxyz", "a lowercase letter");
+constexpr CharInStringMatcher isLowercaseLetter("abcdefghijklmnopqrstuvwxyz",
+                                                "a lowercase letter");
 
-constexpr CharInStringMatcher
-  isUppercaseLetter("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "an uppercase letter");
+constexpr CharInStringMatcher isUppercaseLetter("ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                                                "an uppercase letter");
 
 constexpr CharInStringMatcher isBinaryDigit("01", "a binary digit");
 
 constexpr CharInStringMatcher isOctDigit("01234567", "an oct digit");
 
 constexpr CharInStringMatcher isHexDigit("0123456789ABCDEFabcdef",
-                                                   "a hex digit");
+                                         "a hex digit");
 
 constexpr CharInStringMatcher isWhitespace(" \t\r\n\f\v",
-                                                     "a whitespace character");
+                                           "a whitespace character");
 
 inline auto isSubstringOf(const std::string& s) {
     return IsSubstringMatcher(s);

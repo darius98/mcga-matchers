@@ -1,5 +1,3 @@
-#pragma ide diagnostic ignored "readability-magic-numbers"
-
 #include <vector>
 
 #include "mcga/test.hpp"
@@ -19,13 +17,13 @@ using mcga::matchers::isNotEmpty;
 using mcga::matchers::isOdd;
 using mcga::matchers::isPositive;
 using mcga::test::test;
-using std::vector;
 
 TEST_CASE(iterable, "Matchers::iterable") {
-    vector<int> arr = {1, 3, 5, 7, 9, 11, 13, 15};
-    vector<vector<int>> matrix = {{1, 2, 3, 4}, {2, 3, 4}, {2, 3}, {2, 4}};
-    vector<int> emptyArr = {};
-    vector<int> all3Arr = {3, 3, 3, 3, 3};
+    std::vector<int> arr = {1, 3, 5, 7, 9, 11, 13, 15};
+    std::vector<std::vector<int>> matrix
+      = {{1, 2, 3, 4}, {2, 3, 4}, {2, 3}, {2, 4}};
+    std::vector<int> emptyArr = {};
+    std::vector<int> all3Arr = {3, 3, 3, 3, 3};
 
     test("isEmpty matches empty array",
          [&] { EXPECT_MATCHER_MATCHES(emptyArr, isEmpty) });
@@ -87,7 +85,7 @@ TEST_CASE(iterable, "Matchers::iterable") {
          [&] { EXPECT_MATCHER_MATCHES(arr, anyElement(3)) });
 
     test("anyElement(3) does not match array where no element is 3", [&] {
-        EXPECT_MATCHER_FAILS(vector<int>{1, 2, 4, 5, 6}, anyElement(3))
+        EXPECT_MATCHER_FAILS(std::vector<int>{1, 2, 4, 5, 6}, anyElement(3))
     });
 
     test("anyElement works with element sub-matchers", [&] {

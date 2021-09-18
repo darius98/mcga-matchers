@@ -1,5 +1,3 @@
-#pragma ide diagnostic ignored "readability-magic-numbers"
-
 #include <cctype>
 
 #include "mcga/test.hpp"
@@ -18,8 +16,6 @@ using mcga::matchers::isUppercaseLetter;
 using mcga::matchers::isWhitespace;
 using mcga::test::group;
 using mcga::test::test;
-using std::size_t;
-using std::string;
 
 TEST_CASE(string, "Matchers::string") {
     group("Specific charset matchers", [] {
@@ -135,7 +131,7 @@ TEST_CASE(string, "Matchers::string") {
         test("All substrings of 'Hello World!' match "
              "isSubstring('Hello World!')",
              [] {
-                 string s = "Hello World!";
+                 std::string s = "Hello World!";
                  for (size_t start = 0; start < s.length(); ++start) {
                      for (size_t len = 0; start + len <= s.length(); ++len) {
                          EXPECT_MATCHER_MATCHES(s.substr(start, len),

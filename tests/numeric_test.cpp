@@ -1,6 +1,3 @@
-#pragma ide diagnostic ignored "hicpp-signed-bitwise"
-#pragma ide diagnostic ignored "readability-magic-numbers"
-
 #include "mcga/test.hpp"
 
 #include "mcga/matchers/numeric.hpp"
