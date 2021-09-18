@@ -38,10 +38,9 @@ TEST_CASE(comparison, "Matchers::comparison") {
                 fail("did not fail!");
             } catch (const std::exception& exc) {
                 expect(std::string(exc.what())
-                       == "Expectation failed:\n"
-                          "\tExpected '2'\n"
-                          "\tGot      '3'\n"
-                          "\tWhich is not '2'");
+                       == "Expected '2'\n"
+                          "Got      '3'\n"
+                          "Which is not '2'");
             }
         });
 
@@ -51,10 +50,9 @@ TEST_CASE(comparison, "Matchers::comparison") {
                 fail("did not fail!");
             } catch (const std::exception& exc) {
                 expect(std::string(exc.what())
-                       == "Expectation failed:\n"
-                          "\tExpected 'Hello, world!'\n"
-                          "\tGot      'Hello, World!'\n"
-                          "\tWhich is different at index 7:\n"
+                       == "Expected 'Hello, world!'\n"
+                          "Got      'Hello, World!'\n"
+                          "Which is different at index 7:\n"
                           "\tExpected: 'Hello, world!'\n"
                           "\t     Got: 'Hello, World!'\n"
                           "\t                  ^");
@@ -71,12 +69,11 @@ TEST_CASE(comparison, "Matchers::comparison") {
                 fail("did not fail!");
             } catch (const std::exception& exc) {
                 expect(std::string(exc.what())
-                       == "Expectation failed:\n"
-                          "\tExpected 'This is a long text that differs at a "
+                       == "Expected 'This is a long text that differs at a "
                           "laRge position'\n"
-                          "\tGot      'This is a long text that differs at a "
+                          "Got      'This is a long text that differs at a "
                           "large position'\n"
-                          "\tWhich is different at index 40:\n"
+                          "Which is different at index 40:\n"
                           "\tExpected: '...that differs at a laRge position'\n"
                           "\t     Got: '...that differs at a large position'\n"
                           "\t                                  ^");
@@ -91,12 +88,11 @@ TEST_CASE(comparison, "Matchers::comparison") {
             } catch (const std::exception& exc) {
                 expect(
                   std::string(exc.what())
-                  == "Expectation failed:\n"
-                     "\tExpected 'This is a long tExt that differs at a small "
+                  == "Expected 'This is a long tExt that differs at a small "
                      "position'\n"
-                     "\tGot      'This is a long text that differs at a small "
+                     "Got      'This is a long text that differs at a small "
                      "position'\n"
-                     "\tWhich is different at index 16:\n"
+                     "Which is different at index 16:\n"
                      "\tExpected: 'This is a long tExt that differs at a...'\n"
                      "\t     Got: 'This is a long text that differs at a...'\n"
                      "\t                           ^");
@@ -110,12 +106,11 @@ TEST_CASE(comparison, "Matchers::comparison") {
                 fail("did not fail!");
             } catch (const std::exception& exc) {
                 expect(std::string(exc.what())
-                       == "Expectation failed:\n"
-                          "\tExpected 'This is a very very very very long teXt "
+                       == "Expected 'This is a very very very very long teXt "
                           "that differs at a medium-placed position'\n"
-                          "\tGot      'This is a very very very very long text "
+                          "Got      'This is a very very very very long text "
                           "that differs at a medium-placed position'\n"
-                          "\tWhich is different at index 37:\n"
+                          "Which is different at index 37:\n"
                           "\tExpected: '...ry very very long teXt that differs "
                           "at a ...'\n"
                           "\t     Got: '...ry very very long text that differs "

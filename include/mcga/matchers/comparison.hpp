@@ -51,6 +51,11 @@ struct EqualityMatcher {
     const T& target;
 };
 
+template<class Val, class T>
+concept EqualityMatchableFor
+  = !matchers::Matcher<
+      Val> && matchers::MatcherFor<matchers::EqualityMatcher<Val>, T>;
+
 template<class T>
 struct NonEqualityMatcher {
     explicit constexpr NonEqualityMatcher(const T& target): target(target) {
