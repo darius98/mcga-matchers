@@ -4,7 +4,7 @@
 
 namespace mcga::matchers::internal {
 
-struct IsTrueMatcher : Matcher {
+struct IsTrueMatcher {
     bool matches(const bool& object) const {
         return object;
     }
@@ -18,7 +18,7 @@ struct IsTrueMatcher : Matcher {
     }
 };
 
-struct IsFalseMatcher : Matcher {
+struct IsFalseMatcher {
     bool matches(const bool& object) const {
         return !object;
     }

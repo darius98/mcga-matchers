@@ -7,12 +7,33 @@
 
 namespace mcga::matchers::internal {
 
+template<class O, class T>
+concept eq_comparable_with = requires(const T& t, const O& o) {
+    { o == t } -> tp::boolean_testable;
+    { o != t } -> tp::boolean_testable;
+    { t == o } -> tp::boolean_testable;
+    { t != o } -> tp::boolean_testable;
+};
+
+template<class O, class T>
+concept comparable_with
+  = eq_comparable_with<O, T> && requires(const T& t, const O& o) {
+    { o < t } -> tp::boolean_testable;
+    { o <= t } -> tp::boolean_testable;
+    { o > t } -> tp::boolean_testable;
+    { o >= t } -> tp::boolean_testable;
+    { t < o } -> tp::boolean_testable;
+    { t <= o } -> tp::boolean_testable;
+    { t > o } -> tp::boolean_testable;
+    { t >= o } -> tp::boolean_testable;
+};
+
 template<class T>
-struct EqualityMatcher : Matcher {
+struct EqualityMatcher {
     explicit constexpr EqualityMatcher(const T& target): target(target) {
     }
 
-    template<class O>
+    template<eq_comparable_with<T> O>
     bool matches(const O& obj) {
         return obj == target;
     }
@@ -30,11 +51,11 @@ struct EqualityMatcher : Matcher {
 };
 
 template<class T>
-struct NonEqualityMatcher : Matcher {
+struct NonEqualityMatcher {
     explicit constexpr NonEqualityMatcher(const T& target): target(target) {
     }
 
-    template<class O>
+    template<eq_comparable_with<T> O>
     bool matches(const O& obj) const {
         return obj != target;
     }
@@ -52,11 +73,11 @@ struct NonEqualityMatcher : Matcher {
 };
 
 template<class T>
-struct IsLessThanMatcher : Matcher {
+struct IsLessThanMatcher {
     explicit constexpr IsLessThanMatcher(const T& target): target(target) {
     }
 
-    template<class O>
+    template<comparable_with<T> O>
     bool matches(const O& object) {
         return object < target;
     }
@@ -74,11 +95,11 @@ struct IsLessThanMatcher : Matcher {
 };
 
 template<class T>
-struct IsLessThanEqualMatcher : Matcher {
+struct IsLessThanEqualMatcher {
     explicit constexpr IsLessThanEqualMatcher(const T& target): target(target) {
     }
 
-    template<class O>
+    template<comparable_with<T> O>
     bool matches(const O& object) {
         return object <= target;
     }
@@ -96,11 +117,11 @@ struct IsLessThanEqualMatcher : Matcher {
 };
 
 template<class T>
-struct IsGreaterThanMatcher : Matcher {
+struct IsGreaterThanMatcher {
     explicit constexpr IsGreaterThanMatcher(const T& target): target(target) {
     }
 
-    template<class O>
+    template<comparable_with<T> O>
     bool matches(const O& object) {
         return object > target;
     }
@@ -118,12 +139,12 @@ struct IsGreaterThanMatcher : Matcher {
 };
 
 template<class T>
-struct IsGreaterThanEqualMatcher : Matcher {
+struct IsGreaterThanEqualMatcher {
     explicit constexpr IsGreaterThanEqualMatcher(const T& target)
             : target(target) {
     }
 
-    template<class O>
+    template<comparable_with<T> O>
     bool matches(const O& object) {
         return object >= target;
     }
@@ -141,7 +162,7 @@ struct IsGreaterThanEqualMatcher : Matcher {
 };
 
 template<class T>
-struct IdentityMatcher : Matcher {
+struct IdentityMatcher {
     explicit constexpr IdentityMatcher(const T& target)
             : address(static_cast<const void*>(&target)) {
     }
@@ -169,7 +190,7 @@ struct IdentityMatcher : Matcher {
 constexpr const std::size_t relevantRange = 20;
 
 template<>
-struct EqualityMatcher<std::string> : Matcher {
+struct EqualityMatcher<std::string> {
     explicit EqualityMatcher(std::string target): target(std::move(target)) {
     }
 
@@ -261,7 +282,7 @@ EqualityMatcher<std::string>::operator EqualityMatcher<char[n]>() const {
 }
 
 template<>
-struct NonEqualityMatcher<std::string> : Matcher {
+struct NonEqualityMatcher<std::string> {
     explicit NonEqualityMatcher(std::string target): target(std::move(target)) {
     }
 
@@ -299,7 +320,7 @@ NonEqualityMatcher<std::string>::operator NonEqualityMatcher<char[n]>() const {
 }
 
 template<>
-struct IsLessThanMatcher<std::string> : Matcher {
+struct IsLessThanMatcher<std::string> {
     explicit IsLessThanMatcher(std::string target): target(std::move(target)) {
     }
 
@@ -337,7 +358,7 @@ IsLessThanMatcher<std::string>::operator IsLessThanMatcher<char[n]>() const {
 }
 
 template<>
-struct IsLessThanEqualMatcher<std::string> : Matcher {
+struct IsLessThanEqualMatcher<std::string> {
     explicit IsLessThanEqualMatcher(std::string target)
             : target(std::move(target)) {
     }
@@ -377,7 +398,7 @@ IsLessThanEqualMatcher<std::string>::operator IsLessThanEqualMatcher<char[n]>()
 }
 
 template<>
-struct IsGreaterThanMatcher<std::string> : Matcher {
+struct IsGreaterThanMatcher<std::string> {
     explicit IsGreaterThanMatcher(std::string target)
             : target(std::move(target)) {
     }
@@ -417,7 +438,7 @@ IsGreaterThanMatcher<std::string>::operator IsGreaterThanMatcher<char[n]>()
 }
 
 template<>
-struct IsGreaterThanEqualMatcher<std::string> : Matcher {
+struct IsGreaterThanEqualMatcher<std::string> {
     explicit IsGreaterThanEqualMatcher(std::string target)
             : target(std::move(target)) {
     }

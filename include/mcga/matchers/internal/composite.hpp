@@ -5,11 +5,11 @@
 namespace mcga::matchers::internal {
 
 template<class M1, class M2>
-struct AndMatcher : Matcher {
+struct AndMatcher {
     constexpr AndMatcher(M1 m1, M2 m2): m1(std::move(m1)), m2(std::move(m2)) {
     }
 
-    template<class T>
+    template<class T> requires MatcherFor<M1, T> && MatcherFor<M2, T>
     bool matches(const T& obj) {
         m1Matches = m1.matches(obj);
         m2Matches = m2.matches(obj);
@@ -39,11 +39,11 @@ struct AndMatcher : Matcher {
 };
 
 template<class M1, class M2>
-struct OrMatcher : Matcher {
+struct OrMatcher {
     constexpr OrMatcher(M1 m1, M2 m2): m1(std::move(m1)), m2(std::move(m2)) {
     }
 
-    template<class T>
+    template<class T> requires MatcherFor<M1, T> && MatcherFor<M2, T>
     bool matches(const T& obj) {
         m1Matches = m1.matches(obj);
         m2Matches = m2.matches(obj);
@@ -71,11 +71,11 @@ struct OrMatcher : Matcher {
 };
 
 template<class M>
-struct NotMatcher : Matcher {
+struct NotMatcher {
     constexpr explicit NotMatcher(M matcher): matcher(std::move(matcher)) {
     }
 
-    template<class T>
+    template<class T> requires MatcherFor<M, T>
     bool matches(const T& obj) {
         return !matcher.matches(obj);
     }

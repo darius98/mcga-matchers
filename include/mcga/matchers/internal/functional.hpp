@@ -6,7 +6,7 @@
 
 namespace mcga::matchers::internal {
 
-struct ThrowsAnythingMatcher : Matcher {
+struct ThrowsAnythingMatcher {
     bool matches(const std::function<void()>& func) const {
         try {
             func();
@@ -26,7 +26,7 @@ struct ThrowsAnythingMatcher : Matcher {
 };
 
 template<class E>
-struct ThrowsSpecificMatcher : Matcher {
+struct ThrowsSpecificMatcher {
     bool matches(const std::function<void()>& func) {
         try {
             func();

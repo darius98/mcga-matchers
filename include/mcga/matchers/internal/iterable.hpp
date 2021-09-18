@@ -4,8 +4,11 @@
 
 namespace mcga::matchers::internal {
 
-struct IsEmptyMatcher : Matcher {
+struct IsEmptyMatcher {
     template<class T>
+    requires requires(T object) {
+        { object.empty() } -> tp::boolean_testable;
+    }
     bool matches(const T& object) const {
         return object.empty();
     }
@@ -19,8 +22,11 @@ struct IsEmptyMatcher : Matcher {
     }
 };
 
-struct IsNotEmptyMatcher : Matcher {
+struct IsNotEmptyMatcher {
     template<class T>
+    requires requires(const T& object) {
+        { object.empty() } -> tp::boolean_testable;
+    }
     bool matches(const T& object) const {
         return !object.empty();
     }
@@ -34,13 +40,16 @@ struct IsNotEmptyMatcher : Matcher {
     }
 };
 
-template<class M>
-struct IterableSizeMatcher : Matcher {
+template<Matcher M>
+struct IterableSizeMatcher {
     explicit constexpr IterableSizeMatcher(M sizeMatcher)
             : sizeMatcher(std::move(sizeMatcher)) {
     }
 
     template<class T>
+    requires requires(const T& object) {
+        { object.size() } -> IsMatchableBy<M>;
+    }
     bool matches(const T& obj) {
         return sizeMatcher.matches(obj.size());
     }
@@ -60,12 +69,15 @@ struct IterableSizeMatcher : Matcher {
 };
 
 template<class M>
-struct IterableEachMatcher : Matcher {
+struct IterableEachMatcher {
     explicit constexpr IterableEachMatcher(M elementMatcher)
             : elementMatcher(std::move(elementMatcher)) {
     }
 
     template<class T>
+    requires requires(const T& object) {
+        { *object.begin() } -> IsMatchableBy<M>;
+    }
     bool matches(const T& iterable) {
         index = -1;
         for (const auto& obj: iterable) {
@@ -94,12 +106,15 @@ struct IterableEachMatcher : Matcher {
 };
 
 template<class M>
-struct IterableAnyMatcher : Matcher {
+struct IterableAnyMatcher {
     explicit constexpr IterableAnyMatcher(M elementMatcher)
             : elementMatcher(std::move(elementMatcher)) {
     }
 
     template<class T>
+    requires requires(const T& object) {
+        { *object.begin() } -> IsMatchableBy<M>;
+    }
     bool matches(const T& iterable) {
         for (const auto& obj: iterable) {
             if (elementMatcher.matches(obj)) {

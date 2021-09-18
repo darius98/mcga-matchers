@@ -99,4 +99,18 @@ template<class S, std::size_t I = 0, class... Items>
     StreamTuple<I + 1, Items...>(stream, t);
 }
 
+template<class From, class To>
+concept convertible_to = std::is_convertible_v<From, To> && requires(
+  std::add_rvalue_reference_t<From> (&f)()) {
+    static_cast<To>(f());
+};
+
+template<class B>
+concept helper_boolean_testable = convertible_to<B, bool>;
+
+template<class B>
+concept boolean_testable = helper_boolean_testable<B> && requires(B&& b) {
+    { !std::forward<B>(b) } -> helper_boolean_testable;
+};
+
 }  // namespace mcga::matchers::tp

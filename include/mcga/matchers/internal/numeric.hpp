@@ -4,7 +4,7 @@
 
 namespace mcga::matchers::internal {
 
-struct IsPositiveMatcher : Matcher {
+struct IsPositiveMatcher {
     template<class T>
     bool matches(const T& object) const {
         return object > 0;
@@ -19,7 +19,7 @@ struct IsPositiveMatcher : Matcher {
     }
 };
 
-struct IsNegativeMatcher : Matcher {
+struct IsNegativeMatcher {
     template<class T>
     bool matches(const T& object) const {
         return object < 0;
@@ -34,7 +34,7 @@ struct IsNegativeMatcher : Matcher {
     }
 };
 
-struct IsEvenMatcher : Matcher {
+struct IsEvenMatcher {
     template<class T>
     bool matches(const T& object) const {
         return object % 2 == 0;
@@ -49,7 +49,7 @@ struct IsEvenMatcher : Matcher {
     }
 };
 
-struct IsOddMatcher : Matcher {
+struct IsOddMatcher {
     template<class T>
     bool matches(const T& object) const {
         return object % 2 == 1 || object % 2 == -1;
@@ -64,7 +64,7 @@ struct IsOddMatcher : Matcher {
     }
 };
 
-struct IsZeroMatcher : Matcher {
+struct IsZeroMatcher {
     template<class T>
     bool matches(const T& object) const {
         return object == 0;
@@ -79,7 +79,7 @@ struct IsZeroMatcher : Matcher {
     }
 };
 
-struct IsNotZeroMatcher : Matcher {
+struct IsNotZeroMatcher {
     template<class T>
     bool matches(const T& object) const {
         return object != 0;
@@ -95,7 +95,7 @@ struct IsNotZeroMatcher : Matcher {
 };
 
 template<class T>
-struct IsAlmostEqualMatcher : Matcher {
+struct IsAlmostEqualMatcher {
     constexpr IsAlmostEqualMatcher(const T& target, const double& eps)
             : target(target), eps(eps) {
     }

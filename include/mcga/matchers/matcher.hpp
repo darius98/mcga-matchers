@@ -1,5 +1,7 @@
 #pragma once
 
+#include <concepts>
+
 #include "mcga/matchers/internal/type_helpers.hpp"
 
 namespace mcga::matchers {
@@ -89,9 +91,18 @@ class Description {
     std::stringstream stream;
 };
 
-struct Matcher {};
+template<class M>
+concept Matcher = requires(M m, Description* desc) {
+    {m.describe(desc)};
+    {m.describeFailure(desc)};
+};
 
-template<class T>
-constexpr bool isMatcher = std::is_base_of_v<Matcher, T>;
+template<class M, class T>
+concept MatcherFor = Matcher<M> && requires(M m, const T& obj) {
+    { m.matches(obj) } -> tp::boolean_testable;
+};
+
+template<class T, class M>
+concept IsMatchableBy = MatcherFor<M, T>;
 
 }  // namespace mcga::matchers
