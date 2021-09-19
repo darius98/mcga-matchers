@@ -17,7 +17,7 @@ using mcga::matchers::isWhitespace;
 using mcga::test::group;
 using mcga::test::test;
 
-TEST_CASE(string, "Matchers::string") {
+TEST_CASE("Matchers::string") {
     group("Specific charset matchers", [] {
         test("isLetter matches only letters", [] {
             for (unsigned char i = 1; i <= 127; ++i) {

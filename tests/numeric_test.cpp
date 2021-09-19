@@ -14,7 +14,7 @@ using mcga::test::test;
 
 constexpr auto kLargeLongLongNumber = 1LL << 60;
 
-TEST_CASE(numeric, "Matchers::numeric") {
+TEST_CASE("Matchers::numeric") {
     group("isPositive", [&] {
         test("Matches positive numbers", [&] {
             EXPECT_MATCHER_MATCHES(3, isPositive)

@@ -20,7 +20,7 @@ void simpleFunctionThrow3() {
     throw 3;
 }
 
-TEST_CASE(functional, "Matchers::functional") {
+TEST_CASE("Matchers::functional") {
     group("Lambdas", [] {
         test("throws matcher matches lambda throwing exception", [] {
             EXPECT_MATCHER_MATCHES(

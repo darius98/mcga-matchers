@@ -19,7 +19,7 @@ BasicClass globalClass;
 BasicStruct globalStruct;
 double globalDouble;
 
-TEST_CASE(pointer, "Matchers::pointer") {
+TEST_CASE("Matchers::pointer") {
     group("Null pointers", [] {
         int* intNullPtr = nullptr;
         BasicClass* classNullPtr = nullptr;

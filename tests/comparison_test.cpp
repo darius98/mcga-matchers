@@ -17,7 +17,7 @@ using mcga::test::fail;
 using mcga::test::group;
 using mcga::test::test;
 
-TEST_CASE(comparison, "Matchers::comparison") {
+TEST_CASE("Matchers::comparison") {
     group("Equality", [&] {
         test("isEqualTo matches equal values", [&] {
             EXPECT_MATCHER_MATCHES(3, isEqualTo(3))

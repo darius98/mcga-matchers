@@ -11,7 +11,7 @@ using mcga::matchers::isNot;
 using mcga::test::group;
 using mcga::test::test;
 
-TEST_CASE(composite, "Matchers::composite") {
+TEST_CASE("Matchers::composite") {
     group("both", [] {
         test("both(fitting value, fitting value)",
              [&] { EXPECT_MATCHER_MATCHES(3, both(3, 3)) });
