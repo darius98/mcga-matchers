@@ -1,13 +1,12 @@
 #pragma once
 
-#include <functional>
-
 #include "mcga/matchers/matcher.hpp"
 
 namespace mcga::matchers {
 
 struct ThrowsAnythingMatcher {
-    bool matches(const std::function<void()>& func) const {
+    template<class Callable>
+    bool matches(const Callable& func) const {
         try {
             func();
             return false;
@@ -27,7 +26,8 @@ struct ThrowsAnythingMatcher {
 
 template<class E>
 struct ThrowsSpecificMatcher {
-    bool matches(const std::function<void()>& func) {
+    template<class Callable>
+    bool matches(const Callable& func) {
         try {
             func();
             state = DOESNT_THROW;
