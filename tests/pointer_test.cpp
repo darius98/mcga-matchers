@@ -9,6 +9,7 @@ using mcga::test::group;
 using mcga::test::setUp;
 using mcga::test::tearDown;
 using mcga::test::test;
+using mcga::test::TestCase;
 
 class BasicClass {};
 struct BasicStruct {};
@@ -19,7 +20,7 @@ BasicClass globalClass;
 BasicStruct globalStruct;
 double globalDouble;
 
-TEST_CASE("Matchers::pointer") {
+static auto t = TestCase{"Matchers::pointer"} + [] {
     group("Null pointers", [] {
         int* intNullPtr = nullptr;
         BasicClass* classNullPtr = nullptr;
@@ -125,4 +126,4 @@ TEST_CASE("Matchers::pointer") {
             EXPECT_MATCHER_MATCHES(&globalDouble, isNotNull)
         });
     });
-}
+};

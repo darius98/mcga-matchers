@@ -17,8 +17,9 @@ using mcga::matchers::isNotEmpty;
 using mcga::matchers::isOdd;
 using mcga::matchers::isPositive;
 using mcga::test::test;
+using mcga::test::TestCase;
 
-TEST_CASE("Matchers::iterable") {
+static auto t = TestCase{"Matchers::iterable"} + [] {
     std::vector<int> arr = {1, 3, 5, 7, 9, 11, 13, 15};
     std::vector<std::vector<int>> matrix
       = {{1, 2, 3, 4}, {2, 3, 4}, {2, 3}, {2, 4}};
@@ -114,4 +115,4 @@ TEST_CASE("Matchers::iterable") {
           EXPECT_MATCHER_MATCHES(matrix, eachElement(hasSize(isLessThan(100))))
           EXPECT_MATCHER_FAILS(matrix, eachElement(hasSize(isGreaterThan(2))))
       });
-}
+};

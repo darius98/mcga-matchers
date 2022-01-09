@@ -11,7 +11,7 @@ using mcga::matchers::isNot;
 using mcga::test::group;
 using mcga::test::test;
 
-TEST_CASE("Matchers::composite") {
+auto compositeMatchersTests = mcga::test::TestCase{"Matchers::composite"} + [] {
     group("both", [] {
         test("both(fitting value, fitting value)",
              [&] { EXPECT_MATCHER_MATCHES(3, both(3, 3)) });
@@ -133,4 +133,4 @@ TEST_CASE("Matchers::composite") {
         test("isNot(un-fitting matcher",
              [] { EXPECT_MATCHER_MATCHES(7, isNot(isGreaterThan(10))) });
     });
-}
+};

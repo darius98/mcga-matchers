@@ -8,6 +8,7 @@ using mcga::matchers::throwsA;
 using mcga::test::expect;
 using mcga::test::group;
 using mcga::test::test;
+using mcga::test::TestCase;
 
 void simpleFunction() {
 }
@@ -20,7 +21,7 @@ void simpleFunctionThrow3() {
     throw 3;
 }
 
-TEST_CASE("Matchers::functional") {
+static auto t = TestCase("Matchers::functional") + [] {
     group("Lambdas", [] {
         test("throws matcher matches lambda throwing exception", [] {
             EXPECT_MATCHER_MATCHES(
@@ -89,4 +90,4 @@ TEST_CASE("Matchers::functional") {
             EXPECT_MATCHER_FAILS(simpleFunction, throwsA<int>())
         });
     });
-}
+};

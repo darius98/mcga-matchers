@@ -11,10 +11,11 @@ using mcga::matchers::isPositive;
 using mcga::matchers::isZero;
 using mcga::test::group;
 using mcga::test::test;
+using mcga::test::TestCase;
 
 constexpr auto kLargeLongLongNumber = 1LL << 60;
 
-TEST_CASE("Matchers::numeric") {
+static auto t = TestCase{"Matchers::numeric"} + [] {
     group("isPositive", [&] {
         test("Matches positive numbers", [&] {
             EXPECT_MATCHER_MATCHES(3, isPositive)
@@ -131,4 +132,4 @@ TEST_CASE("Matchers::numeric") {
         EXPECT_MATCHER_MATCHES(4.99, isAlmostEqualTo(3.0, 2))
         EXPECT_MATCHER_FAILS(3 + 1e-9, isAlmostEqualTo(3.0, 1e-12))
     });
-}
+};

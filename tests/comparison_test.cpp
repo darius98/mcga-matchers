@@ -16,8 +16,9 @@ using mcga::test::expect;
 using mcga::test::fail;
 using mcga::test::group;
 using mcga::test::test;
+using mcga::test::TestCase;
 
-TEST_CASE("Matchers::comparison") {
+static auto t = mcga::test::TestCase{"Matchers::comparison"} + [] {
     group("Equality", [&] {
         test("isEqualTo matches equal values", [&] {
             EXPECT_MATCHER_MATCHES(3, isEqualTo(3))
@@ -283,4 +284,4 @@ TEST_CASE("Matchers::comparison") {
                                    isGreaterThanEqual(std::vector<int>{1, 2}))
         });
     });
-}
+};
