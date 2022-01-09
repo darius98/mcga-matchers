@@ -27,8 +27,9 @@ static auto t = TestCase{"Matchers::pointer"} + [] {
         BasicStruct* structNullPtr = nullptr;
         double* doubleNullPtr = nullptr;
 
-        test("isNull matcher matches nullptr",
-             [] { EXPECT_MATCHER_MATCHES(nullptr, isNull) });
+        test("isNull matcher matches nullptr", [] {
+            EXPECT_MATCHER_MATCHES(nullptr, isNull)
+        });
 
         test("isNull matcher matches null pointer of different types", [&] {
             EXPECT_MATCHER_MATCHES(intNullPtr, isNull)
@@ -37,8 +38,9 @@ static auto t = TestCase{"Matchers::pointer"} + [] {
             EXPECT_MATCHER_MATCHES(doubleNullPtr, isNull)
         });
 
-        test("isNotNull matcher does not match nullptr",
-             [&] { EXPECT_MATCHER_FAILS(nullptr, isNotNull) });
+        test("isNotNull matcher does not match nullptr", [&] {
+            EXPECT_MATCHER_FAILS(nullptr, isNotNull)
+        });
 
         test("isNotNull matcher does not match null pointer of different types",
              [&] {

@@ -141,13 +141,16 @@ static auto t = TestCase{"Matchers::string"} + [] {
                  }
              });
 
-        test("'Hello' is not a substring of 'World!'",
-             [] { EXPECT_MATCHER_FAILS("Hello", isSubstringOf("World!")) });
+        test("'Hello' is not a substring of 'World!'", [] {
+            EXPECT_MATCHER_FAILS("Hello", isSubstringOf("World!"))
+        });
 
-        test("'Hello' is not a substring of 'ello'",
-             [] { EXPECT_MATCHER_FAILS("Hello", isSubstringOf("ello")) });
+        test("'Hello' is not a substring of 'ello'", [] {
+            EXPECT_MATCHER_FAILS("Hello", isSubstringOf("ello"))
+        });
 
-        test("'Hello' is not a substring of 'hello!!'",
-             [] { EXPECT_MATCHER_FAILS("Hello", isSubstringOf("hello!!")) });
+        test("'Hello' is not a substring of 'hello!!'", [] {
+            EXPECT_MATCHER_FAILS("Hello", isSubstringOf("hello!!"))
+        });
     });
 };
