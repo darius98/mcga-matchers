@@ -15,7 +15,6 @@ class BasicClass {};
 struct BasicStruct {};
 
 int globalInt;
-char globalChar;
 BasicClass globalClass;
 BasicStruct globalStruct;
 double globalDouble;
@@ -53,20 +52,17 @@ static auto t = TestCase{"Matchers::pointer"} + [] {
 
     group("Non-null pointers", [] {
         std::unique_ptr<int> intHeapPtr;
-        std::unique_ptr<char> charHeapPtr;
         std::unique_ptr<BasicClass> classHeapPtr;
         std::unique_ptr<BasicStruct> structHeapPtr;
         std::unique_ptr<double> doubleHeapPtr;
 
         int stackInt;
-        char stackChar;
         BasicClass stackClass;
         BasicStruct stackStruct;
         double stackDouble;
 
         setUp([&] {
             intHeapPtr = std::make_unique<int>();
-            charHeapPtr = std::make_unique<char>();
             classHeapPtr = std::make_unique<BasicClass>();
             structHeapPtr = std::make_unique<BasicStruct>();
             doubleHeapPtr = std::make_unique<double>();
@@ -74,7 +70,6 @@ static auto t = TestCase{"Matchers::pointer"} + [] {
 
         tearDown([&] {
             intHeapPtr.reset();
-            charHeapPtr.reset();
             classHeapPtr.reset();
             structHeapPtr.reset();
             doubleHeapPtr.reset();
@@ -82,7 +77,6 @@ static auto t = TestCase{"Matchers::pointer"} + [] {
 
         test("isNull does not match non-null heap pointers", [&] {
             EXPECT_MATCHER_FAILS(intHeapPtr.get(), isNull);
-            EXPECT_MATCHER_FAILS(charHeapPtr.get(), isNull);
             EXPECT_MATCHER_FAILS(classHeapPtr.get(), isNull);
             EXPECT_MATCHER_FAILS(structHeapPtr.get(), isNull);
             EXPECT_MATCHER_FAILS(doubleHeapPtr.get(), isNull);
@@ -90,7 +84,6 @@ static auto t = TestCase{"Matchers::pointer"} + [] {
 
         test("isNotNull matches non-null heap pointers", [&] {
             EXPECT_MATCHER_MATCHES(intHeapPtr.get(), isNotNull);
-            EXPECT_MATCHER_MATCHES(charHeapPtr.get(), isNotNull);
             EXPECT_MATCHER_MATCHES(classHeapPtr.get(), isNotNull);
             EXPECT_MATCHER_MATCHES(structHeapPtr.get(), isNotNull);
             EXPECT_MATCHER_MATCHES(doubleHeapPtr.get(), isNotNull);
@@ -98,7 +91,6 @@ static auto t = TestCase{"Matchers::pointer"} + [] {
 
         test("isNull does not match non-null stack pointers", [&] {
             EXPECT_MATCHER_FAILS(&stackInt, isNull);
-            EXPECT_MATCHER_FAILS(&stackChar, isNull);
             EXPECT_MATCHER_FAILS(&stackClass, isNull);
             EXPECT_MATCHER_FAILS(&stackStruct, isNull);
             EXPECT_MATCHER_FAILS(&stackDouble, isNull);
@@ -106,7 +98,6 @@ static auto t = TestCase{"Matchers::pointer"} + [] {
 
         test("isNotNull matches non-null stack pointers", [&] {
             EXPECT_MATCHER_MATCHES(&stackInt, isNotNull);
-            EXPECT_MATCHER_MATCHES(&stackChar, isNotNull);
             EXPECT_MATCHER_MATCHES(&stackClass, isNotNull);
             EXPECT_MATCHER_MATCHES(&stackStruct, isNotNull);
             EXPECT_MATCHER_MATCHES(&stackDouble, isNotNull);
@@ -114,7 +105,6 @@ static auto t = TestCase{"Matchers::pointer"} + [] {
 
         test("isNull does not match non-null stack pointers", [&] {
             EXPECT_MATCHER_FAILS(&globalInt, isNull);
-            EXPECT_MATCHER_FAILS(&globalChar, isNull);
             EXPECT_MATCHER_FAILS(&globalClass, isNull);
             EXPECT_MATCHER_FAILS(&globalStruct, isNull);
             EXPECT_MATCHER_FAILS(&globalDouble, isNull);
@@ -122,7 +112,6 @@ static auto t = TestCase{"Matchers::pointer"} + [] {
 
         test("isNotNull matches non-null data segment pointers", [&] {
             EXPECT_MATCHER_MATCHES(&globalInt, isNotNull);
-            EXPECT_MATCHER_MATCHES(&globalChar, isNotNull);
             EXPECT_MATCHER_MATCHES(&globalClass, isNotNull);
             EXPECT_MATCHER_MATCHES(&globalStruct, isNotNull);
             EXPECT_MATCHER_MATCHES(&globalDouble, isNotNull);
