@@ -16,9 +16,8 @@ using mcga::matchers::isUppercaseLetter;
 using mcga::matchers::isWhitespace;
 using mcga::test::group;
 using mcga::test::test;
-using mcga::test::TestCase;
 
-static auto t = TestCase{"Matchers::string"} + [] {
+TEST_CASE("Matchers::string") {
     group("Specific charset matchers", [] {
         test("isLetter matches only letters", [] {
             for (unsigned char i = 1; i <= 127; ++i) {
@@ -153,4 +152,4 @@ static auto t = TestCase{"Matchers::string"} + [] {
             EXPECT_MATCHER_FAILS("Hello", isSubstringOf("hello!!"));
         });
     });
-};
+}
