@@ -11,7 +11,8 @@
         ::mcga::test::String ERROR_MESSAGE;                                    \
         ::mcga::test::internal::expectMatches(                                 \
           [&](::mcga::test::String failMessage,                                \
-              ::mcga::test::Context failContext) {                             \
+              ::mcga::test::Context failContext,                               \
+              ::mcga::test::String failVerb) -> void {                         \
               FAILURE_STATE = true;                                            \
               ERROR_MESSAGE = std::move(failMessage);                          \
           },                                                                   \
@@ -28,7 +29,8 @@
         ::mcga::test::String ERROR_MESSAGE;                                    \
         ::mcga::test::internal::expectMatches(                                 \
           [&](::mcga::test::String failMessage,                                \
-              ::mcga::test::Context failContext) {                             \
+              ::mcga::test::Context failContext,                               \
+              ::mcga::test::String failVerb) -> void {                         \
               FAILURE_STATE = true;                                            \
               ERROR_MESSAGE = std::move(failMessage);                          \
           },                                                                   \
@@ -48,7 +50,8 @@
         ::mcga::test::String ERROR_MESSAGE;                                    \
         ::mcga::test::internal::expectMatches(                                 \
           [&](::mcga::test::String failMessage,                                \
-              ::mcga::test::Context failContext) {                             \
+              ::mcga::test::Context failContext,                               \
+              ::mcga::test::String failVerb) -> void {                         \
               FAILURE_STATE = true;                                            \
               ERROR_MESSAGE = std::move(failMessage);                          \
           },                                                                   \
