@@ -13,7 +13,7 @@
           [&](::mcga::test::String failMessage,                                \
               ::mcga::test::Context failContext) {                             \
               FAILURE_STATE = true;                                            \
-              ERROR_MESSAGE = ::mcga::test::internal::move(failMessage);       \
+              ERROR_MESSAGE = std::move(failMessage);                          \
           },                                                                   \
           __VA_ARGS__);                                                        \
         if (!FAILURE_STATE) {                                                  \
@@ -30,7 +30,7 @@
           [&](::mcga::test::String failMessage,                                \
               ::mcga::test::Context failContext) {                             \
               FAILURE_STATE = true;                                            \
-              ERROR_MESSAGE = ::mcga::test::internal::move(failMessage);       \
+              ERROR_MESSAGE = std::move(failMessage);                          \
           },                                                                   \
           __VA_ARGS__);                                                        \
         if (!FAILURE_STATE) {                                                  \
@@ -50,7 +50,7 @@
           [&](::mcga::test::String failMessage,                                \
               ::mcga::test::Context failContext) {                             \
               FAILURE_STATE = true;                                            \
-              ERROR_MESSAGE = ::mcga::test::internal::move(failMessage);       \
+              ERROR_MESSAGE = std::move(failMessage);                          \
           },                                                                   \
           __VA_ARGS__);                                                        \
         if (FAILURE_STATE) {                                                   \
