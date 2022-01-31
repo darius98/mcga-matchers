@@ -1,5 +1,7 @@
 #include "mcga/test.hpp"
 
+#include <memory>
+
 #include "mcga/matchers/pointer.hpp"
 #include "mcga/matchers/testing_helpers.hpp"
 
