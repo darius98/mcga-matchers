@@ -63,9 +63,7 @@ struct ThrowsSpecificMatcher {
 };
 
 template<class E>
-constexpr auto throwsA() {
-    return ThrowsSpecificMatcher<E>();
-}
+constexpr auto throwsA = ThrowsSpecificMatcher<E>{};
 
 constexpr ThrowsAnythingMatcher throws;
 

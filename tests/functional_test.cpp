@@ -47,7 +47,7 @@ TEST_CASE("Matchers::functional") {
               [] {
                   throw std::runtime_error("Some error.");
               },
-              throwsA<std::runtime_error>());
+              throwsA<std::runtime_error>);
         });
 
         test("throwsA matcher matches lambda throwing subtype", [] {
@@ -55,7 +55,7 @@ TEST_CASE("Matchers::functional") {
               [] {
                   throw std::range_error("Some range error.");
               },
-              throwsA<std::runtime_error>());
+              throwsA<std::runtime_error>);
         });
 
         test("throwsA matcher does not match lambda throwing supertype", [] {
@@ -63,7 +63,7 @@ TEST_CASE("Matchers::functional") {
               [] {
                   throw std::runtime_error("Some error.");
               },
-              throwsA<std::range_error>());
+              throwsA<std::range_error>);
         });
 
         test("throwsA matcher does not match lambda throwing different types",
@@ -72,11 +72,11 @@ TEST_CASE("Matchers::functional") {
                    [] {
                        throw 3;
                    },
-                   throwsA<std::runtime_error>());
+                   throwsA<std::runtime_error>);
              });
 
         test("throwsA matcher does not match lambda that does not throw", [] {
-            EXPECT_MATCHER_FAILS([] {}, throwsA<std::runtime_error>());
+            EXPECT_MATCHER_FAILS([] {}, throwsA<std::runtime_error>);
         });
     });
 
@@ -95,20 +95,20 @@ TEST_CASE("Matchers::functional") {
 
         test("throwsA matcher matches function throwing specific type", [] {
             EXPECT_MATCHER_MATCHES(simpleFunctionThrow,
-                                   throwsA<std::runtime_error>());
-            EXPECT_MATCHER_MATCHES(simpleFunctionThrow3, throwsA<int>());
+                                   throwsA<std::runtime_error>);
+            EXPECT_MATCHER_MATCHES(simpleFunctionThrow3, throwsA<int>);
         });
 
         test("throwsA matcher does not match function throwing different type",
              [] {
                  EXPECT_MATCHER_FAILS(simpleFunctionThrow3,
-                                      throwsA<std::runtime_error>());
-                 EXPECT_MATCHER_FAILS(simpleFunctionThrow, throwsA<int>());
+                                      throwsA<std::runtime_error>);
+                 EXPECT_MATCHER_FAILS(simpleFunctionThrow, throwsA<int>);
              });
 
         test("throwsA matcher does not match function not throwing", [] {
-            EXPECT_MATCHER_FAILS(simpleFunction, throwsA<std::runtime_error>());
-            EXPECT_MATCHER_FAILS(simpleFunction, throwsA<int>());
+            EXPECT_MATCHER_FAILS(simpleFunction, throwsA<std::runtime_error>);
+            EXPECT_MATCHER_FAILS(simpleFunction, throwsA<int>);
         });
     });
 }
