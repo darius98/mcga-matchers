@@ -85,7 +85,7 @@ constexpr bool IsSstreamable
 
 template<class S, std::size_t I = 0, class... Items>
 typename std::enable_if_t<I == sizeof...(Items), void>
-  StreamTuple(S& stream, const std::tuple<Items...>& t) {
+  StreamTuple(S&, const std::tuple<Items...>&) {
 }
 
 template<class S, std::size_t I = 0, class... Items>
