@@ -12,10 +12,6 @@ using mcga::matchers::isIdenticalTo;
 using mcga::matchers::isLessThan;
 using mcga::matchers::isLessThanEqual;
 using mcga::matchers::isNotEqualTo;
-using mcga::test::expect;
-using mcga::test::fail;
-using mcga::test::group;
-using mcga::test::test;
 
 TEST_CASE("Matchers::comparison") {
     group("Equality", [&] {

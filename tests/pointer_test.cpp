@@ -7,10 +7,6 @@
 
 using mcga::matchers::isNotNull;
 using mcga::matchers::isNull;
-using mcga::test::group;
-using mcga::test::setUp;
-using mcga::test::tearDown;
-using mcga::test::test;
 
 class BasicClass {};
 struct BasicStruct {};

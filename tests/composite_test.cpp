@@ -8,8 +8,6 @@ using mcga::matchers::either;
 using mcga::matchers::isGreaterThan;
 using mcga::matchers::isLessThan;
 using mcga::matchers::isNot;
-using mcga::test::group;
-using mcga::test::test;
 
 TEST_CASE("Matchers::composite") {
     group("both", [] {

@@ -9,8 +9,6 @@ using mcga::matchers::isNegative;
 using mcga::matchers::isOdd;
 using mcga::matchers::isPositive;
 using mcga::matchers::isZero;
-using mcga::test::group;
-using mcga::test::test;
 
 constexpr auto kLargeLongLongNumber = 1LL << 60;
 

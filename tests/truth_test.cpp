@@ -5,7 +5,6 @@
 
 using mcga::matchers::isFalse;
 using mcga::matchers::isTrue;
-using mcga::test::test;
 
 TEST_CASE("Matchers::truth") {
     test("isTrue matcher matches true", [] {

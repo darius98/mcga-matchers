@@ -14,8 +14,6 @@ using mcga::matchers::isOctDigit;
 using mcga::matchers::isSubstringOf;
 using mcga::matchers::isUppercaseLetter;
 using mcga::matchers::isWhitespace;
-using mcga::test::group;
-using mcga::test::test;
 
 TEST_CASE("Matchers::string") {
     group("Specific charset matchers", [] {

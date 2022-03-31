@@ -16,7 +16,6 @@ using mcga::matchers::isLessThan;
 using mcga::matchers::isNotEmpty;
 using mcga::matchers::isOdd;
 using mcga::matchers::isPositive;
-using mcga::test::test;
 
 TEST_CASE("Matchers::iterable") {
     std::vector<int> arr = {1, 3, 5, 7, 9, 11, 13, 15};

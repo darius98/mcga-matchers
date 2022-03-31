@@ -5,9 +5,6 @@
 
 using mcga::matchers::throws;
 using mcga::matchers::throwsA;
-using mcga::test::expect;
-using mcga::test::group;
-using mcga::test::test;
 
 void simpleFunction() {
 }
