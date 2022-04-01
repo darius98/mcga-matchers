@@ -5,7 +5,7 @@
 namespace mcga::matchers {
 
 struct IsNullptrMatcher {
-    bool matches(void* const& obj) const {
+    bool matches(const void* const& obj) const {
         return obj == nullptr;
     }
 
@@ -19,7 +19,7 @@ struct IsNullptrMatcher {
 };
 
 struct IsNotNullptrMatcher {
-    bool matches(void* const& obj) const {
+    bool matches(const void* const& obj) const {
         return obj != nullptr;
     }
 
