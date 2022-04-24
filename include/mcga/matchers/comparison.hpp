@@ -253,7 +253,7 @@ struct EqualityMatcher<std::string> {
                                      + "^");
     }
 
-    template<int n>
+    template<std::size_t n>
     operator EqualityMatcher<char[n]>() const;  // NOLINT
 
   protected:
@@ -277,12 +277,12 @@ struct EqualityMatcher<std::string> {
     }
 };
 
-template<int n>
+template<std::size_t n>
 struct EqualityMatcher<char[n]> : EqualityMatcher<std::string> {
     using EqualityMatcher<std::string>::EqualityMatcher;
 };
 
-template<int n>
+template<std::size_t n>
 EqualityMatcher<std::string>::operator EqualityMatcher<char[n]>() const {
     return EqualityMatcher<char[n]>(target);
 }
@@ -308,19 +308,19 @@ struct NonEqualityMatcher<std::string> {
         (*description) << "'" << target << "'";
     }
 
-    template<int n>
+    template<std::size_t n>
     operator NonEqualityMatcher<char[n]>() const;  // NOLINT
 
   protected:
     std::string target;
 };
 
-template<int n>
+template<std::size_t n>
 struct NonEqualityMatcher<char[n]> : NonEqualityMatcher<std::string> {
     using NonEqualityMatcher<std::string>::NonEqualityMatcher;
 };
 
-template<int n>
+template<std::size_t n>
 NonEqualityMatcher<std::string>::operator NonEqualityMatcher<char[n]>() const {
     return EqualityMatcher<char[n]>(target);
 }
@@ -346,19 +346,19 @@ struct IsLessThanMatcher<std::string> {
         (*description) << ">= '" << target << "'";
     }
 
-    template<int n>
+    template<std::size_t n>
     operator IsLessThanMatcher<char[n]>() const;  // NOLINT
 
   protected:
     std::string target;
 };
 
-template<int n>
+template<std::size_t n>
 struct IsLessThanMatcher<char[n]> : IsLessThanMatcher<std::string> {
     using IsLessThanMatcher<std::string>::IsLessThanMatcher;
 };
 
-template<int n>
+template<std::size_t n>
 IsLessThanMatcher<std::string>::operator IsLessThanMatcher<char[n]>() const {
     return IsLessThanMatcher<char[n]>(target);
 }
@@ -385,19 +385,19 @@ struct IsLessThanEqualMatcher<std::string> {
         (*description) << "> '" << target << "'";
     }
 
-    template<int n>
+    template<std::size_t n>
     operator IsLessThanEqualMatcher<char[n]>() const;  // NOLINT
 
   protected:
     std::string target;
 };
 
-template<int n>
+template<std::size_t n>
 struct IsLessThanEqualMatcher<char[n]> : IsLessThanEqualMatcher<std::string> {
     using IsLessThanEqualMatcher<std::string>::IsLessThanEqualMatcher;
 };
 
-template<int n>
+template<std::size_t n>
 IsLessThanEqualMatcher<std::string>::operator IsLessThanEqualMatcher<char[n]>()
   const {
     return IsLessThanEqualMatcher<char[n]>(target);
@@ -425,19 +425,19 @@ struct IsGreaterThanMatcher<std::string> {
         (*description) << "<= '" << target << "'";
     }
 
-    template<int n>
+    template<std::size_t n>
     operator IsGreaterThanMatcher<char[n]>() const;  // NOLINT
 
   protected:
     std::string target;
 };
 
-template<int n>
+template<std::size_t n>
 struct IsGreaterThanMatcher<char[n]> : IsGreaterThanMatcher<std::string> {
     using IsGreaterThanMatcher<std::string>::IsGreaterThanMatcher;
 };
 
-template<int n>
+template<std::size_t n>
 IsGreaterThanMatcher<std::string>::operator IsGreaterThanMatcher<char[n]>()
   const {
     return IsGreaterThanMatcher<char[n]>(target);
@@ -465,20 +465,20 @@ struct IsGreaterThanEqualMatcher<std::string> {
         (*description) << "< '" << target << "'";
     }
 
-    template<int n>
+    template<std::size_t n>
     operator IsGreaterThanEqualMatcher<char[n]>() const;  // NOLINT
 
   protected:
     std::string target;
 };
 
-template<int n>
+template<std::size_t n>
 struct IsGreaterThanEqualMatcher<char[n]>
         : IsGreaterThanEqualMatcher<std::string> {
     using IsGreaterThanEqualMatcher<std::string>::IsGreaterThanEqualMatcher;
 };
 
-template<int n>
+template<std::size_t n>
 IsGreaterThanEqualMatcher<std::string>::operator IsGreaterThanEqualMatcher<
   char[n]>() const {
     return IsGreaterThanEqualMatcher<char[n]>(target);
