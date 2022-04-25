@@ -40,7 +40,8 @@
         } else if (EXPECTED_ERROR_MSG != ERROR_MESSAGE.c_str()) {              \
             ::mcga::test::fail("expect(" #__VA_ARGS__                          \
                                ") wrong error ERROR_MESSAGE: \"\"\""           \
-                               + EXPECTED_ERROR_MSG + "\"\"\"");               \
+                               + EXPECTED_ERROR_MSG + "\"\"\", got \"\"\""     \
+                               + ERROR_MESSAGE.c_str() + "\"\"\"");            \
         }                                                                      \
     } while (false)
 

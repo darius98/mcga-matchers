@@ -200,12 +200,7 @@ struct EqualityMatcher<std::string> {
     explicit EqualityMatcher(std::string target): target(std::move(target)) {
     }
 
-    bool matches(const std::string& object) {
-        obj = object;
-        return obj == target;
-    }
-
-    bool matches(const char* object) {
+    bool matches(std::string_view object) {
         obj = object;
         return obj == target;
     }
@@ -253,19 +248,15 @@ struct EqualityMatcher<std::string> {
                                      + "^");
     }
 
-    template<std::size_t n>
-    operator EqualityMatcher<char[n]>() const;  // NOLINT
-
-  protected:
+  private:
     std::string obj;
     std::string target;
 
-  private:
-    static std::string extractRelevantSection(const std::string& s,
+    static std::string extractRelevantSection(std::string_view s,
                                               const std::size_t index) {
         auto firstIndex = index >= relevantRange ? index - relevantRange : 0;
         auto lastIndex = std::min(index + relevantRange, s.size() - 1);
-        auto relevantSection = s.substr(firstIndex, lastIndex - firstIndex + 1);
+        auto relevantSection = std::string{s.substr(firstIndex, lastIndex - firstIndex + 1)};
 
         if (index + relevantRange + 1 < s.size()) {
             relevantSection += "...";
@@ -277,216 +268,27 @@ struct EqualityMatcher<std::string> {
     }
 };
 
-template<std::size_t n>
-struct EqualityMatcher<char[n]> : EqualityMatcher<std::string> {
-    using EqualityMatcher<std::string>::EqualityMatcher;
-};
-
-template<std::size_t n>
-EqualityMatcher<std::string>::operator EqualityMatcher<char[n]>() const {
-    return EqualityMatcher<char[n]>(target);
-}
-
-template<>
-struct NonEqualityMatcher<std::string> {
-    explicit NonEqualityMatcher(std::string target): target(std::move(target)) {
-    }
-
-    bool matches(const std::string& obj) const {
-        return obj != target;
-    }
-
-    bool matches(const char* obj) const {
-        return obj != target;
-    }
-
-    void describe(Description* description) const {
-        (*description) << "not '" << target << "'";
-    }
-
-    void describeFailure(Description* description) const {
-        (*description) << "'" << target << "'";
-    }
-
-    template<std::size_t n>
-    operator NonEqualityMatcher<char[n]>() const;  // NOLINT
-
-  protected:
-    std::string target;
-};
-
-template<std::size_t n>
-struct NonEqualityMatcher<char[n]> : NonEqualityMatcher<std::string> {
-    using NonEqualityMatcher<std::string>::NonEqualityMatcher;
-};
-
-template<std::size_t n>
-NonEqualityMatcher<std::string>::operator NonEqualityMatcher<char[n]>() const {
-    return EqualityMatcher<char[n]>(target);
-}
-
-template<>
-struct IsLessThanMatcher<std::string> {
-    explicit IsLessThanMatcher(std::string target): target(std::move(target)) {
-    }
-
-    bool matches(const std::string& obj) const {
-        return obj < target;
-    }
-
-    bool matches(const char* obj) const {
-        return obj < target;
-    }
-
-    void describe(Description* description) const {
-        (*description) << "< '" << target << "'";
-    }
-
-    void describeFailure(Description* description) const {
-        (*description) << ">= '" << target << "'";
-    }
-
-    template<std::size_t n>
-    operator IsLessThanMatcher<char[n]>() const;  // NOLINT
-
-  protected:
-    std::string target;
-};
-
-template<std::size_t n>
-struct IsLessThanMatcher<char[n]> : IsLessThanMatcher<std::string> {
-    using IsLessThanMatcher<std::string>::IsLessThanMatcher;
-};
-
-template<std::size_t n>
-IsLessThanMatcher<std::string>::operator IsLessThanMatcher<char[n]>() const {
-    return IsLessThanMatcher<char[n]>(target);
-}
-
-template<>
-struct IsLessThanEqualMatcher<std::string> {
-    explicit IsLessThanEqualMatcher(std::string target)
-            : target(std::move(target)) {
-    }
-
-    bool matches(const std::string& obj) const {
-        return obj <= target;
-    }
-
-    bool matches(const char* obj) const {
-        return obj <= target;
-    }
-
-    void describe(Description* description) const {
-        (*description) << "<= '" << target << "'";
-    }
-
-    void describeFailure(Description* description) const {
-        (*description) << "> '" << target << "'";
-    }
-
-    template<std::size_t n>
-    operator IsLessThanEqualMatcher<char[n]>() const;  // NOLINT
-
-  protected:
-    std::string target;
-};
-
-template<std::size_t n>
-struct IsLessThanEqualMatcher<char[n]> : IsLessThanEqualMatcher<std::string> {
-    using IsLessThanEqualMatcher<std::string>::IsLessThanEqualMatcher;
-};
-
-template<std::size_t n>
-IsLessThanEqualMatcher<std::string>::operator IsLessThanEqualMatcher<char[n]>()
-  const {
-    return IsLessThanEqualMatcher<char[n]>(target);
-}
-
-template<>
-struct IsGreaterThanMatcher<std::string> {
-    explicit IsGreaterThanMatcher(std::string target)
-            : target(std::move(target)) {
-    }
-
-    bool matches(const std::string& obj) const {
-        return obj > target;
-    }
-
-    bool matches(const char* obj) const {
-        return std::string(obj) > target;
-    }
-
-    void describe(Description* description) const {
-        (*description) << "> '" << target << "'";
-    }
-
-    void describeFailure(Description* description) const {
-        (*description) << "<= '" << target << "'";
-    }
-
-    template<std::size_t n>
-    operator IsGreaterThanMatcher<char[n]>() const;  // NOLINT
-
-  protected:
-    std::string target;
-};
-
-template<std::size_t n>
-struct IsGreaterThanMatcher<char[n]> : IsGreaterThanMatcher<std::string> {
-    using IsGreaterThanMatcher<std::string>::IsGreaterThanMatcher;
-};
-
-template<std::size_t n>
-IsGreaterThanMatcher<std::string>::operator IsGreaterThanMatcher<char[n]>()
-  const {
-    return IsGreaterThanMatcher<char[n]>(target);
-}
-
-template<>
-struct IsGreaterThanEqualMatcher<std::string> {
-    explicit IsGreaterThanEqualMatcher(std::string target)
-            : target(std::move(target)) {
-    }
-
-    bool matches(const std::string& obj) const {
-        return obj >= target;
-    }
-
-    bool matches(const char* obj) const {
-        return obj >= target;
-    }
-
-    void describe(Description* description) const {
-        (*description) << ">= '" << target << "'";
-    }
-
-    void describeFailure(Description* description) const {
-        (*description) << "< '" << target << "'";
-    }
-
-    template<std::size_t n>
-    operator IsGreaterThanEqualMatcher<char[n]>() const;  // NOLINT
-
-  protected:
-    std::string target;
-};
-
-template<std::size_t n>
-struct IsGreaterThanEqualMatcher<char[n]>
-        : IsGreaterThanEqualMatcher<std::string> {
-    using IsGreaterThanEqualMatcher<std::string>::IsGreaterThanEqualMatcher;
-};
-
-template<std::size_t n>
-IsGreaterThanEqualMatcher<std::string>::operator IsGreaterThanEqualMatcher<
-  char[n]>() const {
-    return IsGreaterThanEqualMatcher<char[n]>(target);
-}
-
 template<class T>
 constexpr auto isEqualTo(const T& object) {
     return EqualityMatcher<T>(object);
+}
+
+inline auto isEqualTo(std::string_view object) {
+    return EqualityMatcher<std::string>(std::string(object));
+}
+
+template<std::size_t N>
+auto isEqualTo(const char (&object)[N]) {
+    return EqualityMatcher<std::string>(std::string(object));
+}
+
+template<std::size_t N>
+auto isEqualTo(char (&object)[N]) {
+    return EqualityMatcher<std::string>(std::string(object));
+}
+
+inline auto isEqualTo(const char* object) {
+    return EqualityMatcher<std::string>(std::string(object));
 }
 
 template<class T>

@@ -9,7 +9,7 @@ class Description {
     template<class T>
     Description& operator<<(const T& obj) {
         if constexpr (tp::IsStringLike<T>) {
-            appendString(obj);
+            appendString(std::string(obj));
         } else if constexpr (tp::IsIterable<T>) {
             appendIterable(obj);
         } else if constexpr (tp::IsPair<T>) {

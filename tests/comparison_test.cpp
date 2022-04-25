@@ -47,6 +47,37 @@ TEST_CASE("Matchers::comparison") {
                                               isEqualTo("Hello, world!"));
         });
 
+        test("isEqualTo for string_view", [&] {
+            std::string_view a = "Hello, World!";
+            std::string_view b = "Hello, world!";
+            EXPECT_MATCHER_FAILS_WITH_MESSAGE("Expected 'Hello, world!'\n"
+                                              "Got      'Hello, World!'\n"
+                                              "Which is different at index 7:\n"
+                                              "\tExpected: 'Hello, world!'\n"
+                                              "\t     Got: 'Hello, World!'\n"
+                                              "\t                  ^",
+                                              a,
+                                              isEqualTo(b));
+
+            EXPECT_MATCHER_FAILS_WITH_MESSAGE("Expected 'Hello, world!'\n"
+                                              "Got      'Hello, World!'\n"
+                                              "Which is different at index 7:\n"
+                                              "\tExpected: 'Hello, world!'\n"
+                                              "\t     Got: 'Hello, World!'\n"
+                                              "\t                  ^",
+                                              "Hello, World!",
+                                              isEqualTo(b));
+
+            EXPECT_MATCHER_FAILS_WITH_MESSAGE("Expected 'Hello, world!'\n"
+                                              "Got      'Hello, World!'\n"
+                                              "Which is different at index 7:\n"
+                                              "\tExpected: 'Hello, world!'\n"
+                                              "\t     Got: 'Hello, World!'\n"
+                                              "\t                  ^",
+                                              a,
+                                              isEqualTo("Hello, world!"));
+        });
+
         // weird formatting, but good for readability in the case of this test.
         test("isEqualTo description for longer strings", [&] {
             EXPECT_MATCHER_FAILS_WITH_MESSAGE(
