@@ -143,7 +143,7 @@ constexpr auto hasSize(const T& size) {
     if constexpr (Matcher<T>) {
         return IterableSizeMatcher<T>(size);
     } else {
-        return IterableSizeMatcher(isEqualTo(size));
+        return IterableSizeMatcher(isEqualTo(static_cast<std::size_t>(size)));
     }
 }
 
