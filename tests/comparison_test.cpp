@@ -164,8 +164,6 @@ TEST_CASE("Matchers::comparison") {
             EXPECT_MATCHER_MATCHES(-20, isLessThan(17));
             EXPECT_MATCHER_MATCHES('a', isLessThan('c'));
             EXPECT_MATCHER_MATCHES("abra", isLessThan(std::string("cadabra")));
-            EXPECT_MATCHER_MATCHES("abra", isLessThan("cadabra"));
-            EXPECT_MATCHER_MATCHES(std::string("abra"), isLessThan("cadabra"));
             EXPECT_MATCHER_MATCHES(std::vector<int>{1, 2, 3},
                                    isLessThan(std::vector<int>{2, 1, 3}));
         });
@@ -196,9 +194,6 @@ TEST_CASE("Matchers::comparison") {
             EXPECT_MATCHER_MATCHES('a', isLessThanEqual('c'));
             EXPECT_MATCHER_MATCHES("abra",
                                    isLessThanEqual(std::string("cada")));
-            EXPECT_MATCHER_MATCHES("abra", isLessThanEqual("cada"));
-            EXPECT_MATCHER_MATCHES(std::string("abra"),
-                                   isLessThanEqual("cada"));
             EXPECT_MATCHER_MATCHES(std::vector<int>{1, 2, 3},
                                    isLessThanEqual(std::vector<int>{2, 1, 3}));
         });
@@ -229,8 +224,6 @@ TEST_CASE("Matchers::comparison") {
             EXPECT_MATCHER_FAILS(-20, isGreaterThan(17));
             EXPECT_MATCHER_FAILS('a', isGreaterThan('c'));
             EXPECT_MATCHER_FAILS("abra", isGreaterThan(std::string("cadabra")));
-            EXPECT_MATCHER_FAILS(std::string("abra"), isGreaterThan("cadabra"));
-            EXPECT_MATCHER_FAILS("abra", isGreaterThan("cadabra"));
             EXPECT_MATCHER_FAILS(std::vector<int>{1, 2},
                                  isGreaterThan(std::vector<int>{2, 1}));
         });
@@ -263,9 +256,6 @@ TEST_CASE("Matchers::comparison") {
             EXPECT_MATCHER_FAILS('a', isGreaterThanEqual('c'));
             EXPECT_MATCHER_FAILS("abra",
                                  isGreaterThanEqual(std::string("cada")));
-            EXPECT_MATCHER_FAILS(std::string("abra"),
-                                 isGreaterThanEqual("cada"));
-            EXPECT_MATCHER_FAILS("abra", isGreaterThanEqual("cada"));
             EXPECT_MATCHER_FAILS(std::vector<int>{1, 2},
                                  isGreaterThanEqual(std::vector<int>{2, 1}));
         });

@@ -48,7 +48,7 @@ struct EqualityMatcher {
     }
 
   private:
-    const T& target;
+    T target;
 };
 
 template<class Val, class T>
@@ -75,7 +75,7 @@ struct NonEqualityMatcher {
     }
 
   private:
-    const T& target;
+    T target;
 };
 
 template<class T>
@@ -97,7 +97,7 @@ struct IsLessThanMatcher {
     }
 
   private:
-    const T& target;
+    T target;
 };
 
 template<class T>
@@ -119,7 +119,7 @@ struct IsLessThanEqualMatcher {
     }
 
   private:
-    const T& target;
+    T target;
 };
 
 template<class T>
@@ -141,7 +141,7 @@ struct IsGreaterThanMatcher {
     }
 
   private:
-    const T& target;
+    T target;
 };
 
 template<class T>
@@ -164,7 +164,7 @@ struct IsGreaterThanEqualMatcher {
     }
 
   private:
-    const T& target;
+    T target;
 };
 
 template<class T>
@@ -294,6 +294,24 @@ inline auto isEqualTo(const char* object) {
 template<class T>
 constexpr auto isNotEqualTo(const T& object) {
     return NonEqualityMatcher<T>(object);
+}
+
+inline auto isNotEqualTo(std::string_view object) {
+    return NonEqualityMatcher<std::string>(std::string(object));
+}
+
+template<std::size_t N>
+auto isNotEqualTo(const char (&object)[N]) {
+    return NonEqualityMatcher<std::string>(std::string(object));
+}
+
+template<std::size_t N>
+auto isNotEqualTo(char (&object)[N]) {
+    return NonEqualityMatcher<std::string>(std::string(object));
+}
+
+inline auto isNotEqualTo(const char* object) {
+    return NonEqualityMatcher<std::string>(std::string(object));
 }
 
 template<class T>
